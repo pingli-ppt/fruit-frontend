@@ -3,10 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
+"scripts": {
   "dev": "vite",
   "build": "vite build",
-  "deploy": "gh-pages -d dist --repo https://github.com/pingli-ppt/fruit_project.git"
+  "preview": "vite preview"
 },
   "dependencies": {
     "axios": "^1.13.2",
