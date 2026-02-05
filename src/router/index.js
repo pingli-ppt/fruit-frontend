@@ -5,6 +5,9 @@ import Product from '../views/Product.vue'
 import Science from '../views/Science.vue'
 import Supply from '../views/Supply.vue' 
 import About from '../views/About.vue' 
+import ProductDetail from '../views/ProductDetail.vue'
+import OriginDetail from '../views/OriginDetail.vue'
+import ProductWaterfall from '../components/home/ProductWaterfall.vue'
 
 const routes = [
   { path: '/', component: Home },
@@ -20,7 +23,10 @@ const routes = [
     path: '/about',
     name: 'About',
     component: About
-  }
+  },
+  { path: '/products/:id', name: 'ProductDetail', component: ProductDetail, props: true },
+  { path: '/origin/:name', name: 'OriginDetail', component: OriginDetail } ,
+  { path: '/product-waterfall', component: ProductWaterfall },
 ]
 
 const router = createRouter({
