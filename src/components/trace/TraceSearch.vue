@@ -1,39 +1,38 @@
 <template>
-  <div class="search-box">
-    <input
-      v-model="code"
-      placeholder="请输入批次号 / 溯源码"
-    />
-    <button @click="submit">查询</button>
+  <div class="trace-search">
+    <input v-model="code" placeholder="请输入溯源码" />
+    <button @click="search">查询</button>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 
-const emit = defineEmits(['search'])
 const code = ref('')
+const emit = defineEmits(['search'])
 
-const submit = () => {
-  if (!code.value) return
-  emit('search', code.value)
+const search = () => {
+  console.log('点击查询', code.value) 
+  if (!code.value) return alert('请输入溯源码')
+  emit('search', code.value) // 触发父组件事件
 }
 </script>
 
 <style scoped>
-.search-box {
+.trace-search {
   display: flex;
-  gap: 10px;
-  margin: 20px 0;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 input {
-  flex: 1;
-  padding: 10px;
+  padding: 6px 12px;
+  font-size: 16px;
+  width: 200px;
+  margin-right: 10px;
 }
 button {
-  background: #4caf50;
-  color: #fff;
-  border: none;
-  padding: 10px 16px;
+  padding: 6px 16px;
+  font-size: 16px;
+  cursor: pointer;
 }
 </style>
