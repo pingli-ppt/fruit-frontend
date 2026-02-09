@@ -1,0 +1,97 @@
+{
+  "sourceFile": "上海建贤粮食产销专业合作社.xlsx",
+  "basicInfo": {
+    "name": "上海建贤粮食产销专业合作社",
+    "contact": "王建明",
+    "phone": "13916854880",
+    "establishedDate": "2016-01-12",
+    "registeredCapital": 1000000,
+    "employees": 23,
+    "plantingArea": 3281.02,
+    "isDemonstration": "市级",
+    "honors": "2025年4月获得头桥街道2025年度农业先锋企业称号"
+  },
+  "categories": [
+    {
+      "name": "苏州青(太湖菜）",
+      "season": "除了7月8月其他月份一直有",
+      "description": "苏州青(太湖菜）营养价值高，含有丰富的胡萝卜素、钙、磷、铁及多种芬香族化合物，营养成分优于普通青菜。",
+      "plantingArea": 60,
+      "annualOutput": 125,
+      "annualSales": 120,
+      "annualRevenue": 26.4,
+      "pricePerTon": 2200,
+      "id": "coop_1770559208508_5036_jpa4k8qgl_cat_0",
+      "cooperativeId": "coop_1770559208508_5036_jpa4k8qgl",
+      "cooperativeName": "上海建贤粮食产销专业合作社",
+      "cooperativeLevel": "市级",
+      "qualityCertification": "绿色食品"
+    },
+    {
+      "name": "大板叶茼蒿",
+      "season": "除了7月8月其他月份一直有",
+      "description": "大板叶茼蒿具有清热解毒，利尿消肿、健脾开胃等功效。",
+      "plantingArea": 100,
+      "annualOutput": 120,
+      "annualSales": 115,
+      "annualRevenue": 69,
+      "pricePerTon": 6000,
+      "id": "coop_1770559208508_5036_jpa4k8qgl_cat_1",
+      "cooperativeId": "coop_1770559208508_5036_jpa4k8qgl",
+      "cooperativeName": "上海建贤粮食产销专业合作社",
+      "cooperativeLevel": "市级",
+      "qualityCertification": "绿色食品"
+    },
+    {
+      "name": "青霞66，紫小可",
+      "season": "2月份到5月底",
+      "description": "青霞66：香甜多汁，果肉软糯，汁水丰富，甜度极高。紫小可：富含天然抗氧化物质花青素，营养价值高。",
+      "plantingArea": 50,
+      "annualOutput": 75,
+      "annualSales": 72,
+      "annualRevenue": 86.4,
+      "pricePerTon": 12000,
+      "id": "coop_1770559208508_5036_jpa4k8qgl_cat_2",
+      "cooperativeId": "coop_1770559208508_5036_jpa4k8qgl",
+      "cooperativeName": "上海建贤粮食产销专业合作社",
+      "cooperativeLevel": "市级",
+      "qualityCertification": "绿色食品"
+    },
+    {
+      "name": "水稻（松早香1号）",
+      "season": "每年9月底",
+      "description": "米粒晶莹饱满，蒸煮后米饭软糯香甜，带有独特的“芋艿香”或“爆米花香”，冷后不易回生，适合煮粥，米粥粘稠鲜美，米油丰富。",
+      "plantingArea": 100,
+      "annualOutput": 26.5,
+      "annualSales": 21,
+      "annualRevenue": 25.2,
+      "pricePerTon": 12000,
+      "id": "coop_1770559208508_5036_jpa4k8qgl_cat_3",
+      "cooperativeId": "coop_1770559208508_5036_jpa4k8qgl",
+      "cooperativeName": "上海建贤粮食产销专业合作社",
+      "cooperativeLevel": "市级",
+      "qualityCertification": "绿色食品"
+    }
+  ],
+  "quality": {
+    "qualitySystem": "绿色食品",
+    "pesticideRecords": "已建立（完整记录农药、化肥采购-使用-库存）",
+    "greenControl": "综合防控（多种方式结合）",
+    "detectionMethod": "委托第三方定量检测",
+    "detectionCount": "全部合格",
+    "evidenceMaterials": ""
+  },
+  "logistics": {
+    "range": "上海地区",
+    "method": "常温",
+    "duration": "白天",
+    "mode": "其他"
+  },
+  "sheetNames": [
+    "基础经营信息",
+    "质量合规",
+    "财务数据表"
+  ],
+  "processedAt": "2026-02-08T14:00:08.498Z",
+  "id": "coop_1770559208508_5036_jpa4k8qgl"
+}

@@ -1,0 +1,101 @@
+{
+  "sourceFile": "数据汇总.xlsx",
+  "sheetName": "西湾农业科技发展有限公司",
+  "basicInfo": {
+    "name": "西湾农业科技发展有限公司",
+    "contact": "张见",
+    "phone": "13849322980",
+    "establishedDate": "2021年",
+    "registeredCapital": 1000000,
+    "employees": 32,
+    "plantingArea": 256,
+    "isDemonstration": "市级",
+    "honors": "市番茄金奖"
+  },
+  "categories": [
+    {
+      "name": "番茄",
+      "season": "7月",
+      "description": "",
+      "id": "coop_1770559208573_5036_9w21ta068_cat_0",
+      "cooperativeId": "coop_1770559208573_5036_9w21ta068",
+      "cooperativeName": "西湾农业科技发展有限公司",
+      "cooperativeLevel": "市级",
+      "qualityCertification": "",
+      "plantingArea": 0,
+      "annualOutput": 0,
+      "annualSales": 0,
+      "annualRevenue": 0,
+      "pricePerTon": 0
+    },
+    {
+      "name": "黄瓜",
+      "season": "全年",
+      "description": "",
+      "id": "coop_1770559208573_5036_9w21ta068_cat_1",
+      "cooperativeId": "coop_1770559208573_5036_9w21ta068",
+      "cooperativeName": "西湾农业科技发展有限公司",
+      "cooperativeLevel": "市级",
+      "qualityCertification": "",
+      "plantingArea": 0,
+      "annualOutput": 0,
+      "annualSales": 0,
+      "annualRevenue": 0,
+      "pricePerTon": 0
+    },
+    {
+      "name": "青菜",
+      "season": "全年",
+      "description": "",
+      "id": "coop_1770559208573_5036_9w21ta068_cat_2",
+      "cooperativeId": "coop_1770559208573_5036_9w21ta068",
+      "cooperativeName": "西湾农业科技发展有限公司",
+      "cooperativeLevel": "市级",
+      "qualityCertification": "",
+      "plantingArea": 0,
+      "annualOutput": 0,
+      "annualSales": 0,
+      "annualRevenue": 0,
+      "pricePerTon": 0
+    },
+    {
+      "name": "杭白菜",
+      "season": "全年",
+      "description": "",
+      "id": "coop_1770559208573_5036_9w21ta068_cat_3",
+      "cooperativeId": "coop_1770559208573_5036_9w21ta068",
+      "cooperativeName": "西湾农业科技发展有限公司",
+      "cooperativeLevel": "市级",
+      "qualityCertification": "",
+      "plantingArea": 0,
+      "annualOutput": 0,
+      "annualSales": 0,
+      "annualRevenue": 0,
+      "pricePerTon": 0
+    },
+    {
+      "name": "草莓",
+      "season": "",
+      "description": "",
+      "id": "coop_1770559208573_5036_9w21ta068_cat_4",
+      "cooperativeId": "coop_1770559208573_5036_9w21ta068",
+      "cooperativeName": "西湾农业科技发展有限公司",
+      "cooperativeLevel": "市级",
+      "qualityCertification": "",
+      "plantingArea": 0,
+      "annualOutput": 0,
+      "annualSales": 0,
+      "annualRevenue": 0,
+      "pricePerTon": 0
+    }
+  ],
+  "quality": {},
+  "logistics": {
+    "range": "",
+    "method": "冷藏",
+    "duration": "",
+    "mode": ""
+  },
+  "processedAt": "2026-02-08T14:00:08.571Z",
+  "id": "coop_1770559208573_5036_9w21ta068"
+}

@@ -1,0 +1,609 @@
+{
+  "metadata": {
+    "totalCooperatives": 6,
+    "totalCategories": 20,
+    "withFinancialData": 6,
+    "demoCooperatives": 5,
+    "generatedAt": "2026-02-09T05:35:50.080Z",
+    "originalFile": "categories.json"
+  },
+  "categories": [
+    {
+      "id": "coop_1770559208508_5036_jpa4k8qgl_cat_0",
+      "name": "苏州青(太湖菜）",
+      "season": "除了7月8月其他月份一直有",
+      "description": "苏州青(太湖菜）营养价值高，含有丰富的胡萝卜素、钙、磷、铁及多种芬香族化合物，营养成分优于普通青菜。",
+      "cooperative": {
+        "id": "coop_1770559208508_5036_jpa4k8qgl",
+        "name": "上海建贤粮食产销专业合作社",
+        "level": "市级",
+        "quality": "绿色食品",
+        "isDemo": true
+      },
+      "stats": {
+        "plantingArea": 60,
+        "annualOutput": 125,
+        "annualSales": 120,
+        "annualRevenue": 26.4,
+        "pricePerTon": 2200,
+        "hasFinancialData": true
+      }
+    },
+    {
+      "id": "coop_1770559208508_5036_jpa4k8qgl_cat_1",
+      "name": "大板叶茼蒿",
+      "season": "除了7月8月其他月份一直有",
+      "description": "大板叶茼蒿具有清热解毒，利尿消肿、健脾开胃等功效。",
+      "cooperative": {
+        "id": "coop_1770559208508_5036_jpa4k8qgl",
+        "name": "上海建贤粮食产销专业合作社",
+        "level": "市级",
+        "quality": "绿色食品",
+        "isDemo": true
+      },
+      "stats": {
+        "plantingArea": 100,
+        "annualOutput": 120,
+        "annualSales": 115,
+        "annualRevenue": 69,
+        "pricePerTon": 6000,
+        "hasFinancialData": true
+      }
+    },
+    {
+      "id": "coop_1770559208508_5036_jpa4k8qgl_cat_2",
+      "name": "青霞66，紫小可",
+      "season": "2月份到5月底",
+      "description": "青霞66：香甜多汁，果肉软糯，汁水丰富，甜度极高。紫小可：富含天然抗氧化物质花青素，营养价值高。",
+      "cooperative": {
+        "id": "coop_1770559208508_5036_jpa4k8qgl",
+        "name": "上海建贤粮食产销专业合作社",
+        "level": "市级",
+        "quality": "绿色食品",
+        "isDemo": true
+      },
+      "stats": {
+        "plantingArea": 50,
+        "annualOutput": 75,
+        "annualSales": 72,
+        "annualRevenue": 86.4,
+        "pricePerTon": 12000,
+        "hasFinancialData": true
+      }
+    },
+    {
+      "id": "coop_1770559208508_5036_jpa4k8qgl_cat_3",
+      "name": "水稻（松早香1号）",
+      "season": "每年9月底",
+      "description": "米粒晶莹饱满，蒸煮后米饭软糯香甜，带有独特的“芋艿香”或“爆米花香”，冷后不易回生，适合煮粥，米粥粘稠鲜美，米油丰富。",
+      "cooperative": {
+        "id": "coop_1770559208508_5036_jpa4k8qgl",
+        "name": "上海建贤粮食产销专业合作社",
+        "level": "市级",
+        "quality": "绿色食品",
+        "isDemo": true
+      },
+      "stats": {
+        "plantingArea": 100,
+        "annualOutput": 26.5,
+        "annualSales": 21,
+        "annualRevenue": 25.2,
+        "pricePerTon": 12000,
+        "hasFinancialData": true
+      }
+    },
+    {
+      "id": "coop_1770559208527_5036_uhan67hli_cat_0",
+      "name": "青菜",
+      "season": "一年四季",
+      "description": "冬天口感比较好",
+      "cooperative": {
+        "id": "coop_1770559208527_5036_uhan67hli",
+        "name": "上海根根农产品产销专业合作社",
+        "level": "市级",
+        "quality": "",
+        "isDemo": true
+      },
+      "stats": {
+        "plantingArea": 0,
+        "annualOutput": 0,
+        "annualSales": 0,
+        "annualRevenue": 0,
+        "pricePerTon": 0,
+        "hasFinancialData": false
+      }
+    },
+    {
+      "id": "coop_1770559208527_5036_uhan67hli_cat_1",
+      "name": "地瓜叶",
+      "season": "12月份",
+      "description": "有保健作用",
+      "cooperative": {
+        "id": "coop_1770559208527_5036_uhan67hli",
+        "name": "上海根根农产品产销专业合作社",
+        "level": "市级",
+        "quality": "",
+        "isDemo": true
+      },
+      "stats": {
+        "plantingArea": 0,
+        "annualOutput": 0,
+        "annualSales": 0,
+        "annualRevenue": 0,
+        "pricePerTon": 0,
+        "hasFinancialData": false
+      }
+    },
+    {
+      "id": "coop_1770559208555_5036_yxk85cx1c_cat_0",
+      "name": "青菜",
+      "season": "全年",
+      "description": "选用抗病、优质、高产、抗逆性强、商品性好、适合市场需求的青菜品种，良种覆盖率达到100%。严格按照绿色农产品产地环境条件标准的要求生产蔬菜。",
+      "cooperative": {
+        "id": "coop_1770559208555_5036_yxk85cx1c",
+        "name": "上海稳基粮食种植专业合作社",
+        "level": "区级",
+        "quality": "绿色食品",
+        "isDemo": true
+      },
+      "stats": {
+        "plantingArea": 366,
+        "annualOutput": 310,
+        "annualSales": 310,
+        "annualRevenue": 35,
+        "pricePerTon": 1129.032258064516,
+        "hasFinancialData": true
+      }
+    },
+    {
+      "id": "coop_1770559208555_5036_yxk85cx1c_cat_1",
+      "name": "番茄",
+      "season": "4月",
+      "description": "番茄含有丰富的胡萝卜素、维生素C和B族维生素，营养价值高，既可作为蔬菜也可作为水果，既可生食也可熟食；番茄可用来加工制作番茄酱、番茄汁和番茄丁等；番茄富含番茄红素，具有很强的抗氧化能力，能降低血压、清热解毒之效。",
+      "cooperative": {
+        "id": "coop_1770559208555_5036_yxk85cx1c",
+        "name": "上海稳基粮食种植专业合作社",
+        "level": "区级",
+        "quality": "绿色食品",
+        "isDemo": true
+      },
+      "stats": {
+        "plantingArea": 20,
+        "annualOutput": 70,
+        "annualSales": 70,
+        "annualRevenue": 63,
+        "pricePerTon": 9000,
+        "hasFinancialData": true
+      }
+    },
+    {
+      "id": "coop_1770559208567_5036_9527vgihf_cat_0",
+      "name": "青菜",
+      "season": "全年",
+      "description": "基地自己生产，选用目前口感最好的品种，25年在奉贤区青菜评比中3等奖",
+      "cooperative": {
+        "id": "coop_1770559208567_5036_9527vgihf",
+        "name": "上海绿煜蔬菜种植专业合作社",
+        "level": "国家级",
+        "quality": "绿色食品",
+        "isDemo": true
+      },
+      "stats": {
+        "plantingArea": 0,
+        "annualOutput": 0,
+        "annualSales": 0,
+        "annualRevenue": 0,
+        "pricePerTon": 0,
+        "hasFinancialData": false
+      }
+    },
+    {
+      "id": "coop_1770559208567_5036_9527vgihf_cat_1",
+      "name": "生菜",
+      "season": "1-7月份，9-12月份",
+      "description": "直立生菜，合作社自己生产",
+      "cooperative": {
+        "id": "coop_1770559208567_5036_9527vgihf",
+        "name": "上海绿煜蔬菜种植专业合作社",
+        "level": "国家级",
+        "quality": "绿色食品",
+        "isDemo": true
+      },
+      "stats": {
+        "plantingArea": 0,
+        "annualOutput": 0,
+        "annualSales": 0,
+        "annualRevenue": 0,
+        "pricePerTon": 0,
+        "hasFinancialData": false
+      }
+    },
+    {
+      "id": "coop_1770559208567_5036_9527vgihf_cat_2",
+      "name": "结球甘蓝",
+      "season": "1-7月份，10-12月份",
+      "description": "选择市场上口感最好的品种，兼具品质和产量",
+      "cooperative": {
+        "id": "coop_1770559208567_5036_9527vgihf",
+        "name": "上海绿煜蔬菜种植专业合作社",
+        "level": "国家级",
+        "quality": "绿色食品",
+        "isDemo": true
+      },
+      "stats": {
+        "plantingArea": 0,
+        "annualOutput": 0,
+        "annualSales": 0,
+        "annualRevenue": 0,
+        "pricePerTon": 0,
+        "hasFinancialData": false
+      }
+    },
+    {
+      "id": "coop_1770559208567_5036_9527vgihf_cat_3",
+      "name": "华椰菜",
+      "season": "1-7月份，10-12月份",
+      "description": "选择市场上口感最好的品种，兼具品质和产量",
+      "cooperative": {
+        "id": "coop_1770559208567_5036_9527vgihf",
+        "name": "上海绿煜蔬菜种植专业合作社",
+        "level": "国家级",
+        "quality": "绿色食品",
+        "isDemo": true
+      },
+      "stats": {
+        "plantingArea": 0,
+        "annualOutput": 0,
+        "annualSales": 0,
+        "annualRevenue": 0,
+        "pricePerTon": 0,
+        "hasFinancialData": false
+      }
+    },
+    {
+      "id": "coop_1770559208570_5036_r37nsg1iv_cat_0",
+      "name": "番茄",
+      "season": "4月下旬",
+      "description": "",
+      "cooperative": {
+        "id": "coop_1770559208570_5036_r37nsg1iv",
+        "name": "上海贤伯伯农产品专业合作社",
+        "level": "否",
+        "quality": "绿色食品",
+        "isDemo": false
+      },
+      "stats": {
+        "plantingArea": 0,
+        "annualOutput": 0,
+        "annualSales": 0,
+        "annualRevenue": 0,
+        "pricePerTon": 0,
+        "hasFinancialData": false
+      },
+      "imageUrl": "/images/categories/番茄-ID_DCB254DD103147428F28374357CC53BF.jpg"
+    },
+    {
+      "id": "coop_1770559208570_5036_r37nsg1iv_cat_1",
+      "name": "青菜",
+      "season": "夏季：7-8月份上市 冬季：12月份上市 春季：3月份上市",
+      "description": "",
+      "cooperative": {
+        "id": "coop_1770559208570_5036_r37nsg1iv",
+        "name": "上海贤伯伯农产品专业合作社",
+        "level": "否",
+        "quality": "绿色食品",
+        "isDemo": false
+      },
+      "stats": {
+        "plantingArea": 0,
+        "annualOutput": 0,
+        "annualSales": 0,
+        "annualRevenue": 0,
+        "pricePerTon": 0,
+        "hasFinancialData": false
+      },
+      "imageUrl": "/images/categories/青菜-ID_5CF99F4DADA54FD4B4D6EFE2076C0A02.jpg"
+    },
+    {
+      "id": "coop_1770559208570_5036_r37nsg1iv_cat_2",
+      "name": "黄瓜",
+      "season": "4月下旬",
+      "description": "",
+      "cooperative": {
+        "id": "coop_1770559208570_5036_r37nsg1iv",
+        "name": "上海贤伯伯农产品专业合作社",
+        "level": "否",
+        "quality": "绿色食品",
+        "isDemo": false
+      },
+      "stats": {
+        "plantingArea": 0,
+        "annualOutput": 0,
+        "annualSales": 0,
+        "annualRevenue": 0,
+        "pricePerTon": 0,
+        "hasFinancialData": false
+      },
+      "imageUrl": "/images/categories/黄瓜-ID_079DA26B3529468BA9C4D723BDEB9EB6.jpg"
+    },
+    {
+      "id": "coop_1770559208573_5036_9w21ta068_cat_0",
+      "name": "番茄",
+      "season": "7月",
+      "description": "",
+      "cooperative": {
+        "id": "coop_1770559208573_5036_9w21ta068",
+        "name": "西湾农业科技发展有限公司",
+        "level": "市级",
+        "quality": "",
+        "isDemo": true
+      },
+      "stats": {
+        "plantingArea": 0,
+        "annualOutput": 0,
+        "annualSales": 0,
+        "annualRevenue": 0,
+        "pricePerTon": 0,
+        "hasFinancialData": false
+      }
+    },
+    {
+      "id": "coop_1770559208573_5036_9w21ta068_cat_1",
+      "name": "黄瓜",
+      "season": "全年",
+      "description": "",
+      "cooperative": {
+        "id": "coop_1770559208573_5036_9w21ta068",
+        "name": "西湾农业科技发展有限公司",
+        "level": "市级",
+        "quality": "",
+        "isDemo": true
+      },
+      "stats": {
+        "plantingArea": 0,
+        "annualOutput": 0,
+        "annualSales": 0,
+        "annualRevenue": 0,
+        "pricePerTon": 0,
+        "hasFinancialData": false
+      }
+    },
+    {
+      "id": "coop_1770559208573_5036_9w21ta068_cat_2",
+      "name": "青菜",
+      "season": "全年",
+      "description": "",
+      "cooperative": {
+        "id": "coop_1770559208573_5036_9w21ta068",
+        "name": "西湾农业科技发展有限公司",
+        "level": "市级",
+        "quality": "",
+        "isDemo": true
+      },
+      "stats": {
+        "plantingArea": 0,
+        "annualOutput": 0,
+        "annualSales": 0,
+        "annualRevenue": 0,
+        "pricePerTon": 0,
+        "hasFinancialData": false
+      }
+    },
+    {
+      "id": "coop_1770559208573_5036_9w21ta068_cat_3",
+      "name": "杭白菜",
+      "season": "全年",
+      "description": "",
+      "cooperative": {
+        "id": "coop_1770559208573_5036_9w21ta068",
+        "name": "西湾农业科技发展有限公司",
+        "level": "市级",
+        "quality": "",
+        "isDemo": true
+      },
+      "stats": {
+        "plantingArea": 0,
+        "annualOutput": 0,
+        "annualSales": 0,
+        "annualRevenue": 0,
+        "pricePerTon": 0,
+        "hasFinancialData": false
+      }
+    },
+    {
+      "id": "coop_1770559208573_5036_9w21ta068_cat_4",
+      "name": "草莓",
+      "season": "",
+      "description": "",
+      "cooperative": {
+        "id": "coop_1770559208573_5036_9w21ta068",
+        "name": "西湾农业科技发展有限公司",
+        "level": "市级",
+        "quality": "",
+        "isDemo": true
+      },
+      "stats": {
+        "plantingArea": 0,
+        "annualOutput": 0,
+        "annualSales": 0,
+        "annualRevenue": 0,
+        "pricePerTon": 0,
+        "hasFinancialData": false
+      }
+    }
+  ],
+  "cooperatives": [
+    {
+      "id": "coop_1770559208508_5036_jpa4k8qgl",
+      "name": "上海建贤粮食产销专业合作社",
+      "level": "市级",
+      "quality": "绿色食品",
+      "categories": [
+        {
+          "id": "coop_1770559208508_5036_jpa4k8qgl_cat_0",
+          "name": "苏州青(太湖菜）",
+          "season": "除了7月8月其他月份一直有"
+        },
+        {
+          "id": "coop_1770559208508_5036_jpa4k8qgl_cat_1",
+          "name": "大板叶茼蒿",
+          "season": "除了7月8月其他月份一直有"
+        },
+        {
+          "id": "coop_1770559208508_5036_jpa4k8qgl_cat_2",
+          "name": "青霞66，紫小可",
+          "season": "2月份到5月底"
+        },
+        {
+          "id": "coop_1770559208508_5036_jpa4k8qgl_cat_3",
+          "name": "水稻（松早香1号）",
+          "season": "每年9月底"
+        }
+      ],
+      "hasFinancialData": true,
+      "contact": "王建明",
+      "phone": "13916854880",
+      "plantingArea": 3281.02
+    },
+    {
+      "id": "coop_1770559208527_5036_uhan67hli",
+      "name": "上海根根农产品产销专业合作社",
+      "level": "市级",
+      "quality": "",
+      "categories": [
+        {
+          "id": "coop_1770559208527_5036_uhan67hli_cat_0",
+          "name": "青菜",
+          "season": "一年四季"
+        },
+        {
+          "id": "coop_1770559208527_5036_uhan67hli_cat_1",
+          "name": "地瓜叶",
+          "season": "12月份"
+        }
+      ],
+      "hasFinancialData": false,
+      "contact": "",
+      "phone": "",
+      "plantingArea": 330
+    },
+    {
+      "id": "coop_1770559208555_5036_yxk85cx1c",
+      "name": "上海稳基粮食种植专业合作社",
+      "level": "区级",
+      "quality": "绿色食品",
+      "categories": [
+        {
+          "id": "coop_1770559208555_5036_yxk85cx1c_cat_0",
+          "name": "青菜",
+          "season": "全年"
+        },
+        {
+          "id": "coop_1770559208555_5036_yxk85cx1c_cat_1",
+          "name": "番茄",
+          "season": "4月"
+        }
+      ],
+      "hasFinancialData": true,
+      "contact": "朱文明",
+      "phone": "13331800761",
+      "plantingArea": 386
+    },
+    {
+      "id": "coop_1770559208567_5036_9527vgihf",
+      "name": "上海绿煜蔬菜种植专业合作社",
+      "level": "国家级",
+      "quality": "绿色食品",
+      "categories": [
+        {
+          "id": "coop_1770559208567_5036_9527vgihf_cat_0",
+          "name": "青菜",
+          "season": "全年"
+        },
+        {
+          "id": "coop_1770559208567_5036_9527vgihf_cat_1",
+          "name": "生菜",
+          "season": "1-7月份，9-12月份"
+        },
+        {
+          "id": "coop_1770559208567_5036_9527vgihf_cat_2",
+          "name": "结球甘蓝",
+          "season": "1-7月份，10-12月份"
+        },
+        {
+          "id": "coop_1770559208567_5036_9527vgihf_cat_3",
+          "name": "华椰菜",
+          "season": "1-7月份，10-12月份"
+        }
+      ],
+      "hasFinancialData": false,
+      "contact": "殷春煜",
+      "phone": "13901832880",
+      "plantingArea": 245
+    },
+    {
+      "id": "coop_1770559208570_5036_r37nsg1iv",
+      "name": "上海贤伯伯农产品专业合作社",
+      "level": "否",
+      "quality": "绿色食品",
+      "categories": [
+        {
+          "id": "coop_1770559208570_5036_r37nsg1iv_cat_0",
+          "name": "番茄",
+          "season": "4月下旬"
+        },
+        {
+          "id": "coop_1770559208570_5036_r37nsg1iv_cat_1",
+          "name": "青菜",
+          "season": "夏季：7-8月份上市 冬季：12月份上市 春季：3月份上市"
+        },
+        {
+          "id": "coop_1770559208570_5036_r37nsg1iv_cat_2",
+          "name": "黄瓜",
+          "season": "4月下旬"
+        }
+      ],
+      "hasFinancialData": false,
+      "contact": "李旭东",
+      "phone": "18116363866",
+      "plantingArea": 245
+    },
+    {
+      "id": "coop_1770559208573_5036_9w21ta068",
+      "name": "西湾农业科技发展有限公司",
+      "level": "市级",
+      "quality": "",
+      "categories": [
+        {
+          "id": "coop_1770559208573_5036_9w21ta068_cat_0",
+          "name": "番茄",
+          "season": "7月"
+        },
+        {
+          "id": "coop_1770559208573_5036_9w21ta068_cat_1",
+          "name": "黄瓜",
+          "season": "全年"
+        },
+        {
+          "id": "coop_1770559208573_5036_9w21ta068_cat_2",
+          "name": "青菜",
+          "season": "全年"
+        },
+        {
+          "id": "coop_1770559208573_5036_9w21ta068_cat_3",
+          "name": "杭白菜",
+          "season": "全年"
+        },
+        {
+          "id": "coop_1770559208573_5036_9w21ta068_cat_4",
+          "name": "草莓",
+          "season": ""
+        }
+      ],
+      "hasFinancialData": false,
+      "contact": "张见",
+      "phone": "13849322980",
+      "plantingArea": 256
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "sourceFile": "数据收集表(1).xlsx",
+  "basicInfo": {
+    "name": "上海根根农产品产销专业合作社",
+    "contact": "",
+    "phone": "",
+    "establishedDate": "",
+    "registeredCapital": 0,
+    "employees": 0,
+    "plantingArea": 330,
+    "isDemonstration": "市级",
+    "honors": ""
+  },
+  "categories": [
+    {
+      "name": "青菜",
+      "season": "一年四季",
+      "description": "冬天口感比较好",
+      "id": "coop_1770559208527_5036_uhan67hli_cat_0",
+      "cooperativeId": "coop_1770559208527_5036_uhan67hli",
+      "cooperativeName": "上海根根农产品产销专业合作社",
+      "cooperativeLevel": "市级",
+      "qualityCertification": "",
+      "plantingArea": 0,
+      "annualOutput": 0,
+      "annualSales": 0,
+      "annualRevenue": 0,
+      "pricePerTon": 0
+    },
+    {
+      "name": "地瓜叶",
+      "season": "12月份",
+      "description": "有保健作用",
+      "id": "coop_1770559208527_5036_uhan67hli_cat_1",
+      "cooperativeId": "coop_1770559208527_5036_uhan67hli",
+      "cooperativeName": "上海根根农产品产销专业合作社",
+      "cooperativeLevel": "市级",
+      "qualityCertification": "",
+      "plantingArea": 0,
+      "annualOutput": 0,
+      "annualSales": 0,
+      "annualRevenue": 0,
+      "pricePerTon": 0
+    }
+  ],
+  "quality": {
+    "qualitySystem": "",
+    "pesticideRecords": "",
+    "greenControl": "",
+    "detectionMethod": "",
+    "detectionCount": "",
+    "evidenceMaterials": ""
+  },
+  "logistics": {
+    "range": "上海市",
+    "method": "常温",
+    "duration": "1天",
+    "mode": ""
+  },
+  "sheetNames": [
+    "基础经营信息",
+    "质量合规",
+    "财务数据表"
+  ],
+  "processedAt": "2026-02-08T14:00:08.521Z",
+  "id": "coop_1770559208527_5036_uhan67hli"
+}

@@ -1,0 +1,78 @@
+{
+  "sourceFile": "数据汇总.xlsx",
+  "sheetName": "上海贤伯伯农产品专业合作社",
+  "basicInfo": {
+    "name": "上海贤伯伯农产品专业合作社",
+    "contact": "李旭东",
+    "phone": "18116363866",
+    "establishedDate": "2018-05-27",
+    "registeredCapital": 1000000,
+    "employees": 12,
+    "plantingArea": 245,
+    "isDemonstration": "否",
+    "honors": ""
+  },
+  "categories": [
+    {
+      "name": "番茄",
+      "season": "4月下旬",
+      "description": "",
+      "id": "coop_1770559208570_5036_r37nsg1iv_cat_0",
+      "cooperativeId": "coop_1770559208570_5036_r37nsg1iv",
+      "cooperativeName": "上海贤伯伯农产品专业合作社",
+      "cooperativeLevel": "否",
+      "qualityCertification": "绿色食品",
+      "plantingArea": 0,
+      "annualOutput": 0,
+      "annualSales": 0,
+      "annualRevenue": 0,
+      "pricePerTon": 0
+    },
+    {
+      "name": "青菜",
+      "season": "夏季：7-8月份上市 冬季：12月份上市 春季：3月份上市",
+      "description": "",
+      "id": "coop_1770559208570_5036_r37nsg1iv_cat_1",
+      "cooperativeId": "coop_1770559208570_5036_r37nsg1iv",
+      "cooperativeName": "上海贤伯伯农产品专业合作社",
+      "cooperativeLevel": "否",
+      "qualityCertification": "绿色食品",
+      "plantingArea": 0,
+      "annualOutput": 0,
+      "annualSales": 0,
+      "annualRevenue": 0,
+      "pricePerTon": 0
+    },
+    {
+      "name": "黄瓜",
+      "season": "4月下旬",
+      "description": "",
+      "id": "coop_1770559208570_5036_r37nsg1iv_cat_2",
+      "cooperativeId": "coop_1770559208570_5036_r37nsg1iv",
+      "cooperativeName": "上海贤伯伯农产品专业合作社",
+      "cooperativeLevel": "否",
+      "qualityCertification": "绿色食品",
+      "plantingArea": 0,
+      "annualOutput": 0,
+      "annualSales": 0,
+      "annualRevenue": 0,
+      "pricePerTon": 0
+    }
+  ],
+  "quality": {
+    "qualitySystem": "绿色食品",
+    "pesticideRecords": "已建立（部分记录）",
+    "greenControl": "物理防治（粘虫板/杀虫灯等）",
+    "detectionMethod": "多种检测结合",
+    "detectionCount": "全部合格",
+    "evidenceMaterials": ""
+  },
+  "logistics": {
+    "range": "就近农贸市场",
+    "method": "常温",
+    "duration": "",
+    "mode": "散户/分批次自运"
+  },
+  "processedAt": "2026-02-08T14:00:08.568Z",
+  "id": "coop_1770559208570_5036_r37nsg1iv"
+}

@@ -5,6 +5,10 @@
       <nav>
         <!-- 替换为 router-link，配置对应路由路径 -->
         <router-link to="/" class="nav-link" active-class="active">首页</router-link>
+        <!-- 品类数据库链接 -->
+        <router-link to="/categories" class="nav-link" active-class="active">
+          品类数据库
+        </router-link>
         <router-link to="/product" class="nav-link" active-class="active">产品与服务</router-link>
         <router-link to="/trace" class="nav-link" active-class="active">质检溯源</router-link>
         <router-link to="/science" class="nav-link" active-class="active">科普内容</router-link>

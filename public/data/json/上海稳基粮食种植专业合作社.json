@@ -1,0 +1,67 @@
+{
+  "sourceFile": "数据收集表.xlsx",
+  "basicInfo": {
+    "name": "上海稳基粮食种植专业合作社",
+    "contact": "朱文明",
+    "phone": "13331800761",
+    "establishedDate": "2017-04-30",
+    "registeredCapital": 100,
+    "employees": 12,
+    "plantingArea": 386,
+    "isDemonstration": "区级",
+    "honors": "无"
+  },
+  "categories": [
+    {
+      "name": "青菜",
+      "season": "全年",
+      "description": "选用抗病、优质、高产、抗逆性强、商品性好、适合市场需求的青菜品种，良种覆盖率达到100%。严格按照绿色农产品产地环境条件标准的要求生产蔬菜。",
+      "plantingArea": 366,
+      "annualOutput": 310,
+      "annualSales": 310,
+      "annualRevenue": 35,
+      "pricePerTon": 1129.032258064516,
+      "id": "coop_1770559208555_5036_yxk85cx1c_cat_0",
+      "cooperativeId": "coop_1770559208555_5036_yxk85cx1c",
+      "cooperativeName": "上海稳基粮食种植专业合作社",
+      "cooperativeLevel": "区级",
+      "qualityCertification": "绿色食品"
+    },
+    {
+      "name": "番茄",
+      "season": "4月",
+      "description": "番茄含有丰富的胡萝卜素、维生素C和B族维生素，营养价值高，既可作为蔬菜也可作为水果，既可生食也可熟食；番茄可用来加工制作番茄酱、番茄汁和番茄丁等；番茄富含番茄红素，具有很强的抗氧化能力，能降低血压、清热解毒之效。",
+      "plantingArea": 20,
+      "annualOutput": 70,
+      "annualSales": 70,
+      "annualRevenue": 63,
+      "pricePerTon": 9000,
+      "id": "coop_1770559208555_5036_yxk85cx1c_cat_1",
+      "cooperativeId": "coop_1770559208555_5036_yxk85cx1c",
+      "cooperativeName": "上海稳基粮食种植专业合作社",
+      "cooperativeLevel": "区级",
+      "qualityCertification": "绿色食品"
+    }
+  ],
+  "quality": {
+    "qualitySystem": "绿色食品",
+    "pesticideRecords": "已建立（完整记录农药、化肥采购-使用-库存）",
+    "greenControl": "综合防控（多种方式结合）",
+    "detectionMethod": "多种检测结合",
+    "detectionCount": "全部合格",
+    "evidenceMaterials": ""
+  },
+  "logistics": {
+    "range": "上海",
+    "method": "常温",
+    "duration": "1899-12-30",
+    "mode": "自有物流"
+  },
+  "sheetNames": [
+    "基础经营信息",
+    "质量合规",
+    "财务数据表"
+  ],
+  "processedAt": "2026-02-08T14:00:08.550Z",
+  "id": "coop_1770559208555_5036_yxk85cx1c"
+}

@@ -1,0 +1,93 @@
+{
+  "sourceFile": "数据汇总.xlsx",
+  "sheetName": "上海绿煜蔬菜种植专业合作社",
+  "basicInfo": {
+    "name": "上海绿煜蔬菜种植专业合作社",
+    "contact": "殷春煜",
+    "phone": "13901832880",
+    "establishedDate": "2012-08-04",
+    "registeredCapital": 100,
+    "employees": 28,
+    "plantingArea": 245,
+    "isDemonstration": "国家级",
+    "honors": "市级示范合作社"
+  },
+  "categories": [
+    {
+      "name": "青菜",
+      "season": "全年",
+      "description": "基地自己生产，选用目前口感最好的品种，25年在奉贤区青菜评比中3等奖",
+      "id": "coop_1770559208567_5036_9527vgihf_cat_0",
+      "cooperativeId": "coop_1770559208567_5036_9527vgihf",
+      "cooperativeName": "上海绿煜蔬菜种植专业合作社",
+      "cooperativeLevel": "国家级",
+      "qualityCertification": "绿色食品",
+      "plantingArea": 0,
+      "annualOutput": 0,
+      "annualSales": 0,
+      "annualRevenue": 0,
+      "pricePerTon": 0
+    },
+    {
+      "name": "生菜",
+      "season": "1-7月份，9-12月份",
+      "description": "直立生菜，合作社自己生产",
+      "id": "coop_1770559208567_5036_9527vgihf_cat_1",
+      "cooperativeId": "coop_1770559208567_5036_9527vgihf",
+      "cooperativeName": "上海绿煜蔬菜种植专业合作社",
+      "cooperativeLevel": "国家级",
+      "qualityCertification": "绿色食品",
+      "plantingArea": 0,
+      "annualOutput": 0,
+      "annualSales": 0,
+      "annualRevenue": 0,
+      "pricePerTon": 0
+    },
+    {
+      "name": "结球甘蓝",
+      "season": "1-7月份，10-12月份",
+      "description": "选择市场上口感最好的品种，兼具品质和产量",
+      "id": "coop_1770559208567_5036_9527vgihf_cat_2",
+      "cooperativeId": "coop_1770559208567_5036_9527vgihf",
+      "cooperativeName": "上海绿煜蔬菜种植专业合作社",
+      "cooperativeLevel": "国家级",
+      "qualityCertification": "绿色食品",
+      "plantingArea": 0,
+      "annualOutput": 0,
+      "annualSales": 0,
+      "annualRevenue": 0,
+      "pricePerTon": 0
+    },
+    {
+      "name": "华椰菜",
+      "season": "1-7月份，10-12月份",
+      "description": "选择市场上口感最好的品种，兼具品质和产量",
+      "id": "coop_1770559208567_5036_9527vgihf_cat_3",
+      "cooperativeId": "coop_1770559208567_5036_9527vgihf",
+      "cooperativeName": "上海绿煜蔬菜种植专业合作社",
+      "cooperativeLevel": "国家级",
+      "qualityCertification": "绿色食品",
+      "plantingArea": 0,
+      "annualOutput": 0,
+      "annualSales": 0,
+      "annualRevenue": 0,
+      "pricePerTon": 0
+    }
+  ],
+  "quality": {
+    "qualitySystem": "绿色食品",
+    "pesticideRecords": "已建立（完整记录农药、化肥采购-使用-库存）",
+    "greenControl": "物理防治（粘虫板/杀虫灯等）",
+    "detectionMethod": "自行快速检测",
+    "detectionCount": "个别批次轻微超标（已整改）",
+    "evidenceMaterials": ""
+  },
+  "logistics": {
+    "range": "本市配送",
+    "method": "常温配送",
+    "duration": "当天",
+    "mode": "自幼物流"
+  },
+  "processedAt": "2026-02-08T14:00:08.565Z",
+  "id": "coop_1770559208567_5036_9527vgihf"
+}
