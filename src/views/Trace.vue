@@ -7,6 +7,10 @@
       <!-- 查询输入 -->
       <TraceSearch @search="handleSearch" />
 
+      <!-- 加载提示 + 错误提示 -->
+      <div v-if="loading" class="loading">正在查询中...</div>
+      <div v-if="errorMsg" class="error">{{ errorMsg }}</div>
+
       <!-- ================= 溯源结果 ================= -->
       <div v-if="traceData">
 
@@ -15,14 +19,14 @@
 
         <!-- 产品信息 -->
         <ProductInfoCard
-          :product="{ name: traceData.product, category: traceData.category || '鲜果' }"
-          :batch="traceData.batchCode"
+          :product="{ name: traceData.product_name, category: '鲜果' }"
+          :batch="traceData.batch_code"
         />
 
         <!-- 产地 & 品类 -->
         <OriginCategoryCard
           :origin="{ place: traceData.origin }"
-          :category="traceData.category || '鲜果'"
+          :category="'鲜果'"
         />
 
         <!-- 快速可信标识 -->
@@ -39,12 +43,12 @@
         <!-- 质量与合规 -->
         <QualityCompliance
           :quality="{ reports: ['农残检测报告.pdf'] }"
-          :compliance="{ certificates: ['绿色食品认证'], risk: '无风险' }"
+          :compliance="{ certificates: certList, risk: '无风险' }"
         />
 
         <!-- 企业信息 -->
         <CompanyInfoCard
-          :company="{ name: '奉贤绿色果业合作社', desc: '专注生态水果种植与销售' }"
+          :company="{ name: traceData.coop_name, desc: '专注生态水果种植与销售' }"
         />
 
       </div>
@@ -54,7 +58,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import MainLayout from '../layouts/MainLayout.vue'
 
 import TraceSearch from '../components/trace/TraceSearch.vue'
@@ -67,23 +71,51 @@ import QualityCompliance from '../components/components/QualityCompliance.vue'
 import CompanyInfoCard from '../components/components/CompanyInfoCard.vue'
 
 const traceData = ref(null)
+const loading = ref(false)
+const errorMsg = ref('')
 
-const handleSearch = (code) => {
-  console.log('收到搜索事件 code =', code)
+// 质检认证标签（从数据库读取）
+const certList = ref(['绿色食品认证'])
 
-    traceData.value = {
-      batchCode: code,
-      product: '红富士苹果',
-      origin: '上海奉贤区',
-      status: '检测合格',
-      timeline: [
-        { title: '采摘记录', time: '2025-09-01', content: '合作社完成采摘' },
-        { title: '农残检测', time: '2025-09-02', content: '检测合格（第三方机构）' },
-        { title: '冷链发运', time: '2025-09-03', content: '进入冷链物流系统' },
-        { title: '责任主体', time: '2025-09-03', content: '奉贤绿色果业合作社' }
-      ]
+// 页面加载时获取质检标签
+onMounted(() => {
+  fetchQualityTags()
+})
+
+// 获取质检标签接口
+const fetchQualityTags = async () => {
+  try {
+    const res = await fetch('http://localhost:3000/api/quality/tags')
+    const result = await res.json()
+    if (result.code === 200) {
+      certList.value = result.data.map(item => item.tag_name)
     }
-  
+  } catch (e) {}
+}
+
+// 核心：查询溯源（对接后端）
+const handleSearch = async (code) => {
+  console.log('收到搜索事件 code =', code)
+  loading.value = true
+  errorMsg.value = ''
+  traceData.value = null
+
+  try {
+    // 请求你的真实后端接口
+    const res = await fetch(`http://localhost:3000/api/trace/query?code=${code}`)
+    const result = await res.json()
+
+    if (result.code === 200) {
+      // 赋值后端返回的真实数据
+      traceData.value = result.data
+    } else {
+      errorMsg.value = result.message
+    }
+  } catch (err) {
+    errorMsg.value = '网络异常，请检查后端是否启动'
+  } finally {
+    loading.value = false
+  }
 }
 </script>
 
@@ -98,5 +130,15 @@ const handleSearch = (code) => {
   padding: 15px;
   border-radius: 6px;
   background-color: #f9f9f9;
+}
+.loading {
+  text-align: center;
+  margin: 15px 0;
+  color: #666;
+}
+.error {
+  color: red;
+  text-align: center;
+  margin: 15px 0;
 }
 </style>
