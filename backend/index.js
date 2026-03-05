@@ -74,7 +74,7 @@ app.get('/api/trace/query', async (req, res) => {
 
     // 2. 查询溯源时间线（种植/检测/物流/主体）
     const [timeline] = await db.query(
-      'SELECT title, operate_time AS time, content FROM trace_timeline WHERE batch_code = ? ORDER BY id',
+      'SELECT title, operate_time, content, type FROM trace_timeline WHERE batch_code = ? ORDER BY id',
       [code]
     );
 

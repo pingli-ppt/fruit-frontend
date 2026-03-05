@@ -2,7 +2,6 @@
   <section class="card">
     <h2>{{ product.name }}</h2>
     <p>批次号：{{ batch }}</p>
-    <p>品类：{{ product.category }}</p>
   </section>
 </template>
 
