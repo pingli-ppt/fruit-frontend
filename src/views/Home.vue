@@ -14,7 +14,6 @@ import HeroBanner from '../components/home/HeroBanner.vue'
 import TrustBadge from '../components/home/TrustBadge.vue'
 import CoreEntry from '../components/home/CoreEntry.vue'
 import ProductWaterfall from '../components/home/ProductWaterfall.vue'
-import AboutContent from '../components/about/AboutContent.vue'
 </script>
 
 
