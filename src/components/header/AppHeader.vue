@@ -1,15 +1,15 @@
 <template>
   <header class="header">
     <div class="left">
-      <span class="logo">果数说</span>
+      <div class="logo-box">
+        <img src="/logo.png" alt="果数说" class="logo-img" />
+        <span class="logo-text">果数说</span>
+      </div>
+
+      <!-- 导航菜单 -->
       <nav>
-        <!-- 替换为 router-link，配置对应路由路径 -->
         <router-link to="/" class="nav-link" active-class="active">首页</router-link>
-        <!-- 品类数据库链接 -->
-        <router-link to="/categories" class="nav-link" active-class="active">
-          品类数据库
-        </router-link>
-        <router-link to="/product" class="nav-link" active-class="active">产品与服务</router-link>
+        <router-link to="/categories" class="nav-link" active-class="active">品类数据库</router-link>
         <router-link to="/trace" class="nav-link" active-class="active">质检溯源</router-link>
         <router-link to="/science" class="nav-link" active-class="active">科普内容</router-link>
         <router-link to="/about" class="nav-link" active-class="active">关于我们</router-link>
@@ -17,16 +17,15 @@
     </div>
 
     <div class="right">
-      <input placeholder="搜索产品 / 批次 / 产地" />
-      <button class="mode">消费端</button>
-      <button class="mode ghost" @click="goToSupplyPage">供给端</button>
+      <input placeholder="搜索产品 / 批次 / 产地" class="search-input" />
+      <button class="mode-btn primary">消费端</button>
+      <button class="mode-btn ghost" @click="goToSupplyPage">供给端</button>
     </div>
   </header>
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router'
-
 const router = useRouter()
 
 const goToSupplyPage = () => {
@@ -35,66 +34,134 @@ const goToSupplyPage = () => {
 </script>
 
 <style scoped>
+/* 导航栏整体 */
 .header {
-  height: 64px;
+  height: 70px;
   display: flex;
   justify-content: space-between;
-  padding: 0 24px;
+  padding: 0 36px;
   align-items: center;
-  background: #fff;
-  border-bottom: 1px solid #eee;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(39, 174, 96, 0.15);
+  box-shadow: 0 2px 15px rgba(39, 174, 96, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 999;
 }
-.logo {
-  font-weight: bold;
-  font-size: 18px;
-  margin-right: 24px;
+
+/* ======== 左侧 Logo 区域 ======== */
+.left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
+
+/* Logo 容器：图片 + 文字 */
+.logo-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+/* Logo 图片（你可以放自己的 logo） */
+.logo-img {
+  width: 70px;    /* 从 36px 改成 48px —— 更大 */
+  height: 70px;   /* 同步放大 */
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+/* 文字 LOGO */
+.logo-text {
+  font-weight: 700;
+  font-size: 25px;
+  background: linear-gradient(90deg, #27ae60, #34d39e);
+  -webkit-background-clip: text;
+  color: transparent;
+  letter-spacing: 0.6px;
+}
+
+/* ======== 导航菜单 ======== */
 nav {
   display: flex;
   align-items: center;
+  gap: 10px;
 }
-/* 导航按钮基础样式（默认颜色） */
+
 .nav-link {
-  margin-right: 16px;
-  cursor: pointer;
-  text-decoration: none; /* 去掉a标签默认下划线 */
-  color: #666; /* 基础颜色 */
-  transition: color 0.2s; /* 颜色过渡更顺滑 */
+  padding: 10px 14px;
+  text-decoration: none;
+  color: #444;
+  font-size: 15px;
+  border-radius: 10px;
+  transition: all 0.26s ease;
 }
-/* 导航按钮 hover 效果 */
+
 .nav-link:hover {
-  color: #4caf50; /* hover 时先变主色 */
+  color: #27ae60;
+  background: rgba(39, 174, 96, 0.08);
 }
-/* 激活态样式（跳转后颜色加深） */
+
+/* 选中态：渐变绿色按钮 */
 .nav-link.active {
-  color: #2e7d32; /* 比基础色/hover色更深的绿色 */
-  font-weight: 600; /* 可选：激活后加粗，视觉更突出 */
+  color: #fff !important;
+  background: linear-gradient(90deg, #27ae60, #34d39e);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(39, 174, 96, 0.2);
 }
+
+/* ======== 右侧：搜索 + 模式切换 ======== */
 .right {
   display: flex;
-  gap: 10px;
-  align-items: center; /* 新增：让输入框和按钮垂直居中 */
+  gap: 14px;
+  align-items: center;
 }
-.right input {
-  padding: 6px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+
+/* 搜索框 */
+.search-input {
+  width: 190px;
+  padding: 10px 15px;
+  border: 1px solid rgba(39, 174, 96, 0.22);
+  border-radius: 12px;
   outline: none;
+  font-size: 14px;
+  transition: all 0.24s ease;
 }
-.mode {
-  background: #4caf50;
-  color: #fff;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 4px; /* 新增：按钮圆角，和输入框统一 */
+.search-input:focus {
+  border-color: #27ae60;
+  box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+}
+
+/* 模式按钮 */
+.mode-btn {
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
+  transition: all 0.24s ease;
+  border: none;
 }
-.ghost {
-  background: #eee;
-  color: #333;
+
+/* 主按钮 */
+.mode-btn.primary {
+  background: linear-gradient(90deg, #27ae60, #34d39e);
+  color: #fff;
 }
-/* 供给端按钮 hover 反馈 */
-.ghost:hover {
-  background: #e0e0e0;
+.mode-btn.primary:hover {
+  background: linear-gradient(90deg, #219653, #27ae60);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(39, 174, 96, 0.2);
+}
+
+/* 次要按钮 */
+.mode-btn.ghost {
+  background: rgba(39, 174, 96, 0.09);
+  color: #27ae60;
+}
+.mode-btn.ghost:hover {
+  background: rgba(39, 174, 96, 0.16);
+  transform: translateY(-1px);
 }
 </style>

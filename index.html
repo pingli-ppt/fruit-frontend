@@ -9,5 +9,20 @@
 
     <!-- Vite 入口 -->
     <script type="module" src="/src/main.js"></script>
+  <style>
+    .fixed-ip {
+      width: 120px;
+      position: fixed;
+      left: 25px;
+      bottom: 30px;
+      z-index: 9999;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .fixed-ip:hover {
+      transform: scale(1.1);
+    }
+  </style>
+  <img src="/ip.png" class="fixed-ip" alt="IP形象">
   </body>
 </html>
