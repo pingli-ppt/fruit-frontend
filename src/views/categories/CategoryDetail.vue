@@ -175,71 +175,72 @@ onMounted(() => {
   loadCategoryDetail()
 })
 
-const loadCategoryDetail = () => {
+const loadCategoryDetail = async () => {
   const id = route.params.id
   console.log('详情页接收到的ID:', id)
   
-  // 等待数据服务初始化
-  const checkData = () => {
-    if (dataService.categories && dataService.categories.length > 0) {
-      console.log('数据已加载，开始查找...')
-      
-      // 查找品类
-      category.value = dataService.getCategoryDetail(id)
-      
-      if (category.value) {
-        console.log('成功找到品类:', category.value.name)
-        console.log('原始图片URL:', category.value.imageUrl)
-        console.log('解码后图片URL:', productImageUrl.value)
-        
-        // 调试：检查图片路径
-        if (category.value.imageUrl) {
-          // 测试图片是否可访问
-          const img = new Image()
-          img.src = productImageUrl.value
-          img.onload = () => console.log('图片可正常加载');
-          img.onerror = () => {
-            console.log('图片加载失败，路径:', productImageUrl.value);
-            console.log('建议直接访问:', productImageUrl.value);
-            };
-        } else {
-          console.log('无图片URL');
-        }
-      } else {
-        console.log('未找到品类，ID:', id)
-      }
-      
-      loading.value = false
+  try {
+    loading.value = true
+    
+    // 直接从API获取品类详情
+    const response = await fetch(`http://localhost:3000/api/categories/${id}`)
+    const result = await response.json()
+    
+    if (result.code === 0 && result.data) {
+      category.value = result.data
+      console.log('成功获取品类:', category.value.name)
+      console.log('图片URL:', category.value.imageUrl)
     } else {
-      setTimeout(checkData, 100)
+      console.log('未找到品类，ID:', id)
+      category.value = null
     }
+  } catch (error) {
+    console.error('加载品类详情失败:', error)
+    category.value = null
+  } finally {
+    loading.value = false
   }
-  
-  checkData()
 }
 
 // 计算图片URL（处理URL编码）
 const productImageUrl = computed(() => {
   if (!category.value?.imageUrl) return null
   
+  const imageUrl = category.value.imageUrl
+  console.log('详情页原始图片URL:', imageUrl)
+  
+  // 如果已经是完整路径，直接返回
+  if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+    return imageUrl
+  }
+  
+  // 如果已经有基础路径，直接返回
+  if (imageUrl.startsWith('/fruit-frontend/')) {
+    return imageUrl
+  }
+  
+  // 处理从数据库获取的路径（以 /images/ 开头）
+  if (imageUrl.startsWith('/images/')) {
+    return `/fruit-frontend${imageUrl}`
+  }
+  
   // 解码URL中的中文字符
   try {
-    const decoded = decodeURIComponent(category.value.imageUrl)
-    console.log('URL解码:', category.value.imageUrl, '→', decoded)
+    const decoded = decodeURIComponent(imageUrl)
+    console.log('URL解码:', imageUrl, '→', decoded)
 
     // 添加基础路径前缀
-    // 确保路径以 /fruit-frontend/ 开头
     let finalUrl = decoded
     if (!finalUrl.startsWith('/fruit-frontend/') && !finalUrl.startsWith('http')) {
       finalUrl = '/fruit-frontend' + (finalUrl.startsWith('/') ? '' : '/') + finalUrl
     }
     
-    console.log('最终图片URL:', finalUrl)
+    console.log('详情页最终图片URL:', finalUrl)
     return finalUrl
   } catch (error) {
     console.log('URL解码失败，使用原路径:', error)
     // 同样添加基础路径
-    let finalUrl = category.value.imageUrl
+    let finalUrl = imageUrl
     if (!finalUrl.startsWith('/fruit-frontend/') && !finalUrl.startsWith('http')) {
       finalUrl = '/fruit-frontend' + (finalUrl.startsWith('/') ? '' : '/') + finalUrl
     }
@@ -315,7 +316,11 @@ const handleImageError = (e) => {
 
 // 操作方法
 const goBack = () => {
-  router.push('/categories')
+  // 返回时保留之前的查询参数
+  router.push({
+    path: '/categories',
+    query: router.currentRoute.value.query
+  })
 }
 </script>
 

@@ -106,7 +106,7 @@ const props = defineProps({
 
 const emit = defineEmits(['click'])
 
-// 图片URL处理函数 - 修正路径
+// 图片URL处理函数
 const formatImageUrl = (imageUrl) => {
   if (!imageUrl) return null
   
@@ -120,6 +120,11 @@ const formatImageUrl = (imageUrl) => {
   // 如果已经有基础路径，直接返回
   if (imageUrl.startsWith('/fruit-frontend/')) {
     return imageUrl
+  }
+  
+  // 处理从数据库获取的路径（以 /images/ 开头）
+  if (imageUrl.startsWith('/images/')) {
+    return `/fruit-frontend${imageUrl}`
   }
   
   try {

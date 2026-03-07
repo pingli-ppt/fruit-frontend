@@ -1,5 +1,33 @@
-node_modules
+# 依赖文件夹
+node_modules/
+
+# 环境变量
 .env
+.env.local
+.env.*.local
+
+# 后端环境变量
+backend/.env
+backend/.env.local
+
+# 配置文件
 config.js
+*.config.js
+
+# 日志
 *.log
+npm-debug.log*
+
+# 操作系统
 .DS_Store
+Thumbs.db
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 后端依赖
+backend/node_modules/

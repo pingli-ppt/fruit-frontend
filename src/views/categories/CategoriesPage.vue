@@ -26,7 +26,7 @@
         <!-- 结果信息 -->
         <div class="results-header">
           <div class="results-count">
-            共找到 <span class="count-number">{{ filteredCategories.length }}</span> 个品类
+            共找到 <span class="count-number">{{ totalItems }}</span> 个品类
           </div>
           <div class="results-sort">
             <select v-model="sortBy" class="sort-select">
@@ -56,7 +56,7 @@
         <!-- 品类列表 -->
         <div v-else class="categories-grid">
           <CategoryCard
-            v-for="category in paginatedCategories"
+            v-for="category in categories"
             :key="category.id"
             :category="category"
             @click="viewCategoryDetail(category.id)"
@@ -67,7 +67,7 @@
         <CategoryPagination
           v-if="filteredCategories.length > 0"
           :current-page="currentPage"
-          :total-items="filteredCategories.length"
+          :total-items="totalItems"
           :items-per-page="itemsPerPage"
           @page-change="handlePageChange"
         />
@@ -87,8 +87,10 @@ import dataService from '../../services/dataService'
 
 const router = useRouter()
 
+// 1. 先声明所有状态变量
 // 状态管理
 const categories = ref([])
+const filteredResult = ref([]) // 存储筛选结果
 const cooperatives = ref([])
 const statsData = ref({
   totalCategories: 20,
@@ -97,6 +99,7 @@ const statsData = ref({
   totalCooperatives: 6
 })
 const loading = ref(true)
+const totalItems = ref(0)  // 定义总条数变量
 
 // 筛选和排序
 const activeFilters = ref({
@@ -113,72 +116,34 @@ const sortBy = ref('default')
 const currentPage = ref(1)
 const itemsPerPage = 12
 
-// 加载数据 - 简化版本
-onMounted(async () => {
-  loading.value = true
-  
-  try {
-    // 等待数据服务初始化
-    await new Promise(resolve => {
-      const checkInitialized = () => {
-        if (dataService.isInitialized) {
-          resolve()
-        } else {
-          setTimeout(checkInitialized, 100)
-        }
-      }
-      checkInitialized()
-    })
-    
-    // 获取数据
-    categories.value = dataService.categories
-    cooperatives.value = dataService.cooperatives
-    
-    // 尝试获取统计数据，如果失败就用默认值
-    try {
-      const serviceStats = dataService.getStats()
-      if (serviceStats && Object.keys(serviceStats).length > 0) {
-        statsData.value = serviceStats
-      }
-    } catch (err) {
-      console.log('使用默认统计数据')
-    }
-    
-    console.log('数据加载完成:', {
-      品类数: categories.value.length,
-      合作社数: cooperatives.value.length
-    })
-    
-  } catch (error) {
-    console.log('数据加载过程:', error.message)
-  } finally {
-    loading.value = false
+// 2. 然后再声明函数（这样函数内部才能使用上面的变量）
+// 更新URL查询参数
+const updateQueryParams = () => {
+  const query = {
+    page: currentPage.value,
+    sortBy: sortBy.value,
+    ...activeFilters.value
   }
-})
-
-// 筛选后的品类
-const filteredCategories = computed(() => {
-  if (!categories.value.length) return []
-  
-  let result = dataService.filterCategories(activeFilters.value)
-  result = dataService.sortCategories(result, sortBy.value)
-  return result
-})
-
-// 分页后的品类
-const paginatedCategories = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage
-  const end = start + itemsPerPage
-  return filteredCategories.value.slice(start, end)
-})
-
-// 事件处理
-const handleFilterUpdate = (newFilters) => {
-  activeFilters.value = { ...activeFilters.value, ...newFilters }
-  currentPage.value = 1 // 重置到第一页
+  // 删除空值
+  Object.keys(query).forEach(key => {
+    if (query[key] === '' || query[key] === undefined || query[key] === null) {
+      delete query[key]
+    }
+  })
+  router.replace({ query })
 }
 
-const resetFilters = () => {
+// 事件处理
+const handleFilterUpdate = async (newFilters) => {
+  activeFilters.value = { ...activeFilters.value, ...newFilters }
+  currentPage.value = 1
+  updateQueryParams() // 更新URL
+  loading.value = true
+  await loadCategories()
+  loading.value = false
+}
+
+const resetFilters = async () => {
   activeFilters.value = {
     categoryName: '',
     cooperativeName: '',
@@ -189,21 +154,134 @@ const resetFilters = () => {
   }
   sortBy.value = 'default'
   currentPage.value = 1
+  updateQueryParams() // 更新URL
+  loading.value = true
+  await loadCategories()
+  loading.value = false
 }
 
-const handlePageChange = (page) => {
+const handlePageChange = async (page) => {
   currentPage.value = page
+  updateQueryParams() // 更新URL
+  loading.value = true
+  await loadCategories()
+  loading.value = false
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-const viewCategoryDetail = (id) => {
-  router.push(`/category/${id}`)
+// 监听排序变化
+watch(sortBy, async () => {
+  currentPage.value = 1
+  updateQueryParams() // 更新URL
+  loading.value = true
+  await loadCategories()
+  loading.value = false
+})
+
+// 加载数据
+onMounted(async () => {
+  loading.value = true
+  
+  try {
+    // 从URL查询参数中恢复状态
+    const query = router.currentRoute.value.query
+    if (query.page) {
+      currentPage.value = parseInt(query.page)
+    }
+    if (query.sortBy) {
+      sortBy.value = query.sortBy
+    }
+    // 恢复筛选条件
+    if (query.categoryName) activeFilters.value.categoryName = query.categoryName
+    if (query.cooperativeName) activeFilters.value.cooperativeName = query.cooperativeName
+    if (query.demoLevel) activeFilters.value.demoLevel = query.demoLevel
+    if (query.qualityCert) activeFilters.value.qualityCert = query.qualityCert
+    if (query.hasFinancialData) activeFilters.value.hasFinancialData = query.hasFinancialData === 'true'
+
+    // 获取统计数据
+    const stats = await dataService.getStats()
+    if (stats) {
+      statsData.value = stats
+    }
+    
+    // 获取合作社列表
+    const coopList = await dataService.getCooperatives()
+    cooperatives.value = coopList
+    
+    // 获取品类列表
+    await loadCategories()
+    
+  } catch (error) {
+    console.error('加载数据失败:', error)
+  } finally {
+    loading.value = false
+  }
+})
+
+// 加载品类列表
+const loadCategories = async () => {
+  try {
+    // 调用API获取数据
+    const response = await fetch(`http://localhost:3000/api/categories?page=${currentPage.value}&limit=${itemsPerPage}&sortBy=${sortBy.value}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    const result = await response.json();
+    console.log('API返回数据:', result);
+    
+    if (result.code === 0 && result.data) {
+      // 设置当前页的数据
+      categories.value = result.data.categories || [];
+      
+      // 更新总条数用于分页
+      if (result.data.pagination) {
+        // 把总条数存储到一个新的ref变量
+        totalItems.value = result.data.pagination.totalItems || 0;
+        console.log('总条数:', totalItems.value);
+      }
+    } else {
+      categories.value = [];
+      totalItems.value = 0;
+    }
+  } catch (error) {
+    console.error('加载品类列表失败:', error)
+    categories.value = []
+    totalItems.value = 0
+  }
 }
 
-// 监听筛选变化
-watch([activeFilters, sortBy], () => {
+// 筛选后的品类
+const filteredCategories = computed(() => {
+  return Array.isArray(categories.value) ? categories.value : []
+})
+
+// 分页后的品类 - 直接返回从API获取的数据
+const paginatedCategories = computed(() => {
+  return Array.isArray(categories.value) ? categories.value : []
+})
+
+const viewCategoryDetail = (id) => {
+  // 跳转到详情页时，把当前页码作为查询参数传递
+  router.push({
+    path: `/category/${id}`,
+    query: {
+      page: currentPage.value,
+      sortBy: sortBy.value,
+      ...activeFilters.value
+    }
+  })
+}
+
+// 监听排序变化
+watch(sortBy, async () => {
   currentPage.value = 1
-}, { deep: true })
+  loading.value = true
+  await loadCategories()
+  loading.value = false
+})
 </script>
 
 <style scoped>
