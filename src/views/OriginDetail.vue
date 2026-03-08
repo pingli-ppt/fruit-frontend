@@ -94,55 +94,120 @@
         </el-row>
       </div>
 
+      <div class="coop-section" style="margin-top: 40px;">
+        <h2 class="section-heading">基地入驻生产主体</h2>
+        <el-row :gutter="20">
+          <el-col 
+            :span="8" :xs="24" :sm="12" 
+            v-for="coop in coopsList" 
+            :key="coop.id"
+            style="margin-bottom: 20px;"
+          >
+            <el-card shadow="hover" :body-style="{ padding: '20px' }">
+              <template #header>
+                <div class="card-header">
+                  <span style="font-weight: bold; font-size: 16px;">{{ coop.name }}</span>
+                  <el-tag size="small" type="warning" effect="plain">{{ coop.honor }}</el-tag>
+                </div>
+              </template>
+              
+              <div class="coop-info">
+                <p><strong>负责人：</strong>{{ coop.leader }}</p>
+                <p><strong>联系方式：</strong>{{ coop.phone }}</p>
+                <p><strong>种植面积：</strong>{{ coop.area }}</p>
+                <p><strong>认证情况：</strong>{{ coop.certification }}</p>
+                <div style="margin-top: 10px;">
+                  <el-tag 
+                    v-for="p in coop.products" 
+                    :key="p" 
+                    size="small" 
+                    style="margin-right: 5px; margin-bottom: 5px;"
+                  >
+                    {{ p }}
+                  </el-tag>
+                </div>
+              </div>
+            </el-card>
+          </el-col>
+        </el-row>
+      </div>
+
     </div>
   </MainLayout>
 </template>
 
+pper:hover .map-overlay { opacity: 1; }
+.zoom-icon { font-size: 3rem; margin-bottom: 10px; }
+
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-// 引入图标
+import axios from 'axios'
+import { ElMessage } from 'element-plus'
 import { ZoomIn, VideoCamera } from '@element-plus/icons-vue'
-// 引入组件
 import MainLayout from '../layouts/MainLayout.vue'
 import ProductCard from '../components/ProductCard.vue'
-// 引入刚才写的 API
-import { getOriginDetail, getFarmingRecords, getOriginProducts } from '../api/origin.js'
 import FengxianMap from '../components/FengxianMap.vue' 
+
 const route = useRoute()
 const router = useRouter()
-const originName = route.params.name 
+// 这里的变量名要和下面接口里的一致
+const originId = route.params.name 
+
+const API_BASE = "http://localhost:8080/api/origin-v2"
 
 // 响应式数据
 const originInfo = ref({})
 const farmingRecords = ref([])
+const coopsList = ref([]) // 这个就是我们要填满的列表
 const productList = ref([])
+const loading = ref(false) // 补上缺失的 loading 定义
+
+const fetchPageData = async () => {
+  try {
+    loading.value = true
+    console.log('正在请求后端数据...', originId)
+
+    // 修改点：确保接口路径和变量名正确
+    const [resDetail, resCoops] = await Promise.all([
+      axios.get(`${API_BASE}/details/${originId}`),
+      axios.get(`${API_BASE}/cooperatives/${originId}`)
+    ])
+
+    // 处理详情和农事记录
+    if (resDetail.data.success) {
+      originInfo.value = resDetail.data.data
+      farmingRecords.value = resDetail.data.data.records || []
+    }
+
+    // 处理合作社列表数据
+    if (resCoops.data.success) {
+      coopsList.value = resCoops.data.data
+      console.log('合作社列表已加载:', coopsList.value)
+    }
+    
+  } catch (error) {
+    console.error("数据加载失败:", error)
+    ElMessage.error("后端服务未响应，请检查8080端口是否启动")
+  } finally {
+    loading.value = false
+  }
+}
 
 // 交互方法
 const handleMapClick = () => {
-  alert('此处功能：点击后弹窗显示高清地图，或跳转到 GIS 地块详情页。')
+  ElMessage.info('正在调取 Fengxian GIS 实时地块数据...')
 }
 
 const handleTrace = (batchCode) => {
-  // 跳转到 Trace 页面
   router.push({ path: '/trace', query: { code: batchCode } })
 }
 
-// 页面加载时调用数据
+// 关键点：在组件挂载时运行 fetchPageData
 onMounted(async () => {
   console.log('产地页面初始化...')
-  
-  // 1. 获取详情
-  const infoRes = await getOriginDetail(originName)
-  originInfo.value = infoRes.data
-  
-  // 2. 获取农事记录
-  const recordRes = await getFarmingRecords()
-  farmingRecords.value = recordRes.data
-
-  // 3. 获取产品
-  const prodRes = await getOriginProducts()
-  productList.value = prodRes.data
+  // 执行我们上面写的获取数据的函数
+  fetchPageData()
 })
 </script>
 
@@ -168,7 +233,7 @@ onMounted(async () => {
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   cursor: pointer;
-  height: 400px; /* 固定高度确保对齐 */
+  height: 400px;
   background: #f0f2f5;
 }
 .map-img {
@@ -192,15 +257,13 @@ onMounted(async () => {
   opacity: 0;
   transition: opacity 0.3s;
 }
-.map-wrapper:hover .map-overlay { opacity: 1; }
-.zoom-icon { font-size: 3rem; margin-bottom: 10px; }
-
+.map-wra
 /* Data Section */
 .data-section { margin-bottom: 60px; }
 .section-heading {
   font-size: 1.8rem;
   margin-bottom: 25px;
-  border-left: 5px solid #67c23a; /* 绿色系 */
+  border-left: 5px solid #67c23a;
   padding-left: 15px;
 }
 .custom-tabs { min-height: 450px; }
@@ -218,4 +281,22 @@ onMounted(async () => {
 
 /* Product Section */
 .product-section { margin-bottom: 40px; }
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.coop-info p {
+  font-size: 14px;
+  margin: 8px 0;
+  color: #606266;
+}
+.section-heading {
+  margin-bottom: 25px;
+  font-size: 24px;
+  color: #303133;
+  border-left: 5px solid #67c23a;
+  padding-left: 15px;
+}
 </style>
