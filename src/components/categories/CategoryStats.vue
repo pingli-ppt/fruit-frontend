@@ -1,6 +1,6 @@
 <template>
   <div class="category-stats">
-    <div class="stats-grid">
+    <div class="stats-row">
       <div class="stat-card">
         <div class="stat-icon">📊</div>
         <div class="stat-content">
@@ -14,14 +14,6 @@
         <div class="stat-content">
           <div class="stat-number">{{ safeStats.demoCooperatives }}</div>
           <div class="stat-label">示范合作社</div>
-        </div>
-      </div>
-      
-      <div class="stat-card">
-        <div class="stat-icon">👥</div>
-        <div class="stat-content">
-          <div class="stat-number">{{ safeStats.totalCooperatives }}</div>
-          <div class="stat-label">合作社总数</div>
         </div>
       </div>
     </div>
@@ -42,7 +34,6 @@ const safeStats = computed(() => {
   return props.stats || {
     totalCategories: 20,
     demoCooperatives: 5,
-    totalCooperatives: 6
   };
 });
 </script>
@@ -50,12 +41,12 @@ const safeStats = computed(() => {
 <style scoped>
 .category-stats {
   margin: 0 auto;
-  max-width: 1000px;
+  max-width: 600px;
 }
 
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+.stats-row {
+  display: flex;
+  justify-content: center;  /* 居中显示 */
   gap: 20px;
 }
 
@@ -68,6 +59,8 @@ const safeStats = computed(() => {
   border-radius: 12px;
   border: 1px solid rgba(76, 175, 80, 0.2);
   transition: all 0.3s;
+  flex: 1;  /* 两个卡片等宽 */
+  max-width: 250px;  /* 限制每个卡片最大宽度 */
 }
 
 .stat-card:hover {
@@ -97,15 +90,16 @@ const safeStats = computed(() => {
   color: #666;
 }
 
+/* 响应式设计 */
 @media (max-width: 768px) {
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .stats-row {
+    flex-direction: column;  /* 手机上改为上下排列 */
+    align-items: center;
   }
-}
-
-@media (max-width: 480px) {
-  .stats-grid {
-    grid-template-columns: 1fr;
+  
+  .stat-card {
+    width: 100%;
+    max-width: 300px;
   }
 }
 </style>
