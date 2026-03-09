@@ -94,7 +94,6 @@ const filteredResult = ref([]) // 存储筛选结果
 const cooperatives = ref([])
 const statsData = ref({
   totalCategories: 20,
-  withFinancialData: 6,
   demoCooperatives: 5,
   totalCooperatives: 6
 })
@@ -108,7 +107,8 @@ const activeFilters = ref({
   demoLevel: '',
   qualityCert: '',
   season: '',
-  hasFinancialData: false
+  hasFinancialData: false,
+  status: undefined
 })
 const sortBy = ref('default')
 
@@ -150,7 +150,8 @@ const resetFilters = async () => {
     demoLevel: '',
     qualityCert: '',
     season: '',
-    hasFinancialData: false
+    hasFinancialData: false,
+    status: undefined
   }
   sortBy.value = 'default'
   currentPage.value = 1
@@ -221,8 +222,39 @@ onMounted(async () => {
 // 加载品类列表
 const loadCategories = async () => {
   try {
+    // 构建查询参数
+    const params = new URLSearchParams({
+      page: currentPage.value,
+      limit: itemsPerPage,
+      sortBy: sortBy.value
+    });
+    
+    // 添加筛选条件
+    if (activeFilters.value.categoryName) {
+      params.append('categoryName', activeFilters.value.categoryName);
+    }
+    if (activeFilters.value.cooperativeName) {
+      params.append('cooperativeName', activeFilters.value.cooperativeName);
+    }
+    if (activeFilters.value.demoLevel) {
+      params.append('demoLevel', activeFilters.value.demoLevel);
+    }
+    if (activeFilters.value.qualityCert) {
+      params.append('qualityCert', activeFilters.value.qualityCert);
+    }
+    if (activeFilters.value.hasFinancialData) {
+      params.append('hasFinancialData', 'true');
+    }
+    // 状态筛选
+    if (activeFilters.value.status !== undefined && activeFilters.value.status !== null) {
+      params.append('status', activeFilters.value.status);
+    }
+
     // 调用API获取数据
-    const response = await fetch(`http://localhost:3000/api/categories?page=${currentPage.value}&limit=${itemsPerPage}&sortBy=${sortBy.value}`, {
+    const url = `http://localhost:3000/api/categories?${params.toString()}`;
+    console.log('请求URL:', url);  // 调试用
+    
+    const response = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'

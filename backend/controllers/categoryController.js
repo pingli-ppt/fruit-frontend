@@ -9,17 +9,22 @@ exports.getCategories = async (req, res) => {
       demoLevel,
       qualityCert,
       hasFinancialData,
+      status,
       sortBy = 'default',
       page = 1,
       limit = 12
     } = req.query;
+
+    // 先更新一次状态（确保最新）
+    await Category.updateStatusBySeason().catch(err => console.log('更新状态失败:', err));
 
     const filters = {
       categoryName,
       cooperativeName,
       demoLevel,
       qualityCert,
-      hasFinancialData: hasFinancialData === 'true'
+      hasFinancialData: hasFinancialData === 'true',
+      status: status !== undefined ? parseInt(status) : undefined
     };
 
     const offset = (page - 1) * limit;
@@ -42,7 +47,7 @@ exports.getCategories = async (req, res) => {
       shipping_origin: cat.shipping_origin || '上海',
       freshness_info: cat.freshness_info || '建议冷藏保存，尽快食用',
       shipping_time: cat.shipping_time || cat.season || '全年',
-      status: cat.status ?? 1,
+      status: cat.current_status ?? cat.status ?? 1,  // 优先用实时状态，没有就用数据库状态，默认1
       cooperative: {
         id: cat.cooperative_id,
         name: cat.cooperative_name,
@@ -233,3 +238,39 @@ exports.scrollCategories = async (req, res) => {
     });
   }
 };
+
+// 定时更新商品状态（每天凌晨1点执行）
+const scheduleStatusUpdate = () => {
+  // 计算到明天凌晨1点的时间
+  const now = new Date();
+  const night = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() + 1, // 明天
+    1, // 凌晨1点
+    0,
+    0
+  );
+  const msToMidnight = night.getTime() - now.getTime();
+  
+  // 第一次执行：等到明天凌晨1点
+  setTimeout(() => {
+    // 立即执行一次
+    Category.updateStatusBySeason().catch(console.error);
+    
+    // 然后每天执行一次
+    setInterval(async () => {
+      try {
+        await Category.updateStatusBySeason();
+        console.log('商品状态已更新');
+      } catch (error) {
+        console.error('更新商品状态失败:', error);
+      }
+    }, 24 * 60 * 60 * 1000); // 24小时
+  }, msToMidnight);
+  
+  console.log(`定时任务已设置，将在 ${night.toLocaleString()} 首次执行`);
+};
+
+// 启动定时任务
+scheduleStatusUpdate();

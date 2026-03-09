@@ -3,8 +3,18 @@ const db = require('../config/database');
 class Category {
   // 获取所有品类（支持筛选、排序、分页）
   static async findAll(filters = {}, sortBy = 'default', limit = 12, offset = 0) {
+    console.log('收到筛选条件:', filters);
+    
     let sql = `
       SELECT c.*, 
+             CASE
+               WHEN c.season IS NULL OR c.season = '' THEN 0
+               WHEN c.season LIKE '%全年%' OR c.season LIKE '%一年四季%' THEN 1
+               WHEN c.season LIKE '%${new Date().getMonth() + 1}月%' THEN 1
+               WHEN c.season LIKE '%-${new Date().getMonth() + 1}月份%' THEN 1
+               WHEN c.season LIKE '%${new Date().getMonth() + 1}-%' THEN 1
+               ELSE 0
+             END as current_status,
              coop.name as cooperative_name, 
              coop.level as cooperative_level, 
              coop.quality as cooperative_quality,
@@ -53,6 +63,21 @@ class Category {
     if (filters.hasFinancialData) {
       sql += ' AND s.annual_sales > 0';
     }
+
+    // 状态筛选
+    if (filters.status !== undefined) {
+      sql += ` AND (
+        CASE
+          WHEN c.season IS NULL OR c.season = '' THEN 0
+          WHEN c.season LIKE '%全年%' OR c.season LIKE '%一年四季%' THEN 1
+          WHEN c.season LIKE '%${new Date().getMonth() + 1}月%' THEN 1
+          WHEN c.season LIKE '%-${new Date().getMonth() + 1}月份%' THEN 1
+          WHEN c.season LIKE '%${new Date().getMonth() + 1}-%' THEN 1
+          ELSE 0
+        END
+      ) = ?`;
+      params.push(filters.status);
+    }
     
     // 排序
     switch (sortBy) {
@@ -68,6 +93,9 @@ class Category {
       case 'name':
         sql += ' ORDER BY c.name';
         break;
+      case 'new':  // 上新排序
+        sql += ' ORDER BY c.created_at DESC';
+        break;  
       default:
         sql += ' ORDER BY c.created_at DESC';
     }
@@ -115,6 +143,21 @@ class Category {
     if (filters.hasFinancialData) {
       sql += ' AND s.annual_sales > 0';
     }
+
+    // 状态筛选
+    if (filters.status !== undefined) {
+      sql += ` AND (
+        CASE
+          WHEN c.season IS NULL OR c.season = '' THEN 0
+          WHEN c.season LIKE '%全年%' OR c.season LIKE '%一年四季%' THEN 1
+          WHEN c.season LIKE '%${new Date().getMonth() + 1}月%' THEN 1
+          WHEN c.season LIKE '%-${new Date().getMonth() + 1}月份%' THEN 1
+          WHEN c.season LIKE '%${new Date().getMonth() + 1}-%' THEN 1
+          ELSE 0
+        END
+      ) = ?`;
+      params.push(filters.status);
+    }
     
     const [rows] = await db.query(sql, params);
     return rows[0].total;
@@ -124,6 +167,14 @@ class Category {
   static async findById(id) {
     const [rows] = await db.query(`
       SELECT c.*, 
+             CASE
+               WHEN c.season IS NULL OR c.season = '' THEN 0
+               WHEN c.season LIKE '%全年%' OR c.season LIKE '%一年四季%' THEN 1
+               WHEN c.season LIKE '%${new Date().getMonth() + 1}月%' THEN 1
+               WHEN c.season LIKE '%-${new Date().getMonth() + 1}月份%' THEN 1
+               WHEN c.season LIKE '%${new Date().getMonth() + 1}-%' THEN 1
+               ELSE 0
+             END as current_status,
              coop.name as cooperative_name, 
              coop.level as cooperative_level, 
              coop.quality as cooperative_quality,
@@ -204,6 +255,14 @@ class Category {
   static async scroll(filters = {}, sortBy = 'default', limit = 12, lastId = null) {
     let sql = `
       SELECT c.*, 
+             CASE
+               WHEN c.season IS NULL OR c.season = '' THEN 0
+               WHEN c.season LIKE '%全年%' OR c.season LIKE '%一年四季%' THEN 1
+               WHEN c.season LIKE '%${new Date().getMonth() + 1}月%' THEN 1
+               WHEN c.season LIKE '%-${new Date().getMonth() + 1}月份%' THEN 1
+               WHEN c.season LIKE '%${new Date().getMonth() + 1}-%' THEN 1
+               ELSE 0
+             END as current_status,
              coop.name as cooperative_name, 
              coop.level as cooperative_level, 
              coop.quality as cooperative_quality,
@@ -252,6 +311,21 @@ class Category {
     if (filters.hasFinancialData) {
       sql += ' AND s.annual_sales > 0';
     }
+
+    // 状态筛选
+    if (filters.status !== undefined) {
+      sql += ` AND (
+        CASE
+          WHEN c.season IS NULL OR c.season = '' THEN 0
+          WHEN c.season LIKE '%全年%' OR c.season LIKE '%一年四季%' THEN 1
+          WHEN c.season LIKE '%${new Date().getMonth() + 1}月%' THEN 1
+          WHEN c.season LIKE '%-${new Date().getMonth() + 1}月份%' THEN 1
+          WHEN c.season LIKE '%${new Date().getMonth() + 1}-%' THEN 1
+          ELSE 0
+        END
+      ) = ?`;
+      params.push(filters.status);
+    }
   
     // 无限滚动：获取比 lastId 更小的数据
     if (lastId) {
@@ -296,6 +370,34 @@ class Category {
       hasMore,
       lastId: lastItemId
     };
+  }
+
+  // 根据当前时间判断商品状态
+  static async updateStatusBySeason() {
+    try {
+      console.log('开始更新商品状态...');
+      const now = new Date();
+      const currentMonth = now.getMonth() + 1; // getMonth() 返回 0-11
+      
+      const sql = `
+        UPDATE categories 
+        SET status = CASE
+          WHEN season IS NULL OR season = '' THEN 0
+          WHEN season LIKE '%全年%' OR season LIKE '%一年四季%' THEN 1
+          WHEN season LIKE '%${currentMonth}月%' THEN 1
+          WHEN season LIKE '%-${currentMonth}月份%' THEN 1
+          WHEN season LIKE '%${currentMonth}-%' THEN 1
+          ELSE 0
+        END
+      `;
+      
+      const [result] = await db.query(sql);
+      console.log(`商品状态更新完成，影响了 ${result.affectedRows} 行`);
+      return result;
+    } catch (error) {
+      console.error('更新商品状态失败:', error);
+      throw error;
+    }
   }
 }
 

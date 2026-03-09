@@ -10,14 +10,6 @@
       </div>
       
       <div class="stat-card">
-        <div class="stat-icon">💰</div>
-        <div class="stat-content">
-          <div class="stat-number">{{ safeStats.withFinancialData }}</div>
-          <div class="stat-label">有销售数据</div>
-        </div>
-      </div>
-      
-      <div class="stat-card">
         <div class="stat-icon">🏆</div>
         <div class="stat-content">
           <div class="stat-number">{{ safeStats.demoCooperatives }}</div>
@@ -49,7 +41,6 @@ const props = defineProps({
 const safeStats = computed(() => {
   return props.stats || {
     totalCategories: 20,
-    withFinancialData: 6,
     demoCooperatives: 5,
     totalCooperatives: 6
   };

@@ -50,6 +50,39 @@
                 <span class="info-label">质量认证：</span>
                 <span class="info-value">{{ category.cooperative?.quality || '无认证' }}</span>
               </div>
+              <div class="info-item">
+                <span class="info-label">当前状态：</span>
+                <span class="info-value">
+                  <span :class="{'status-on': category.status === 1, 'status-off': category.status === 0}"> 
+                    {{ category.status === 1 ? '在售' : '下架' }}
+                  </span>
+                  <span class="season-hint">（根据上市期自动判断）</span>
+                </span>
+              </div>
+
+              <div class="info-item" v-if="category.stock !== undefined">
+                <span class="info-label">库存：</span>
+                <span class="info-value">
+                  {{ category.stock }} 
+                  <span v-if="category.stock > 0">件</span>
+                  <span v-else class="stock-warning">（缺货）</span>
+                </span>
+              </div>
+
+              <div class="info-item" v-if="category.shipping_origin">
+                <span class="info-label">发货地：</span>
+                <span class="info-value">{{ category.shipping_origin }}</span>
+              </div>
+
+              <div class="info-item" v-if="category.shipping_time">
+                <span class="info-label">发货时效：</span>
+                <span class="info-value">{{ category.shipping_time }}</span>
+              </div>
+
+              <div class="info-item" v-if="category.freshness_info">
+                <span class="info-label">保鲜说明：</span>
+                <span class="info-value">{{ category.freshness_info }}</span>
+              </div>
             </div>
           </div>
           
@@ -714,5 +747,25 @@ const goBack = () => {
   .product-main-image {
     max-height: 300px;
   }
+}
+
+/* 状态样式 */
+.status-on {
+  color: #4caf50;
+  font-weight: bold;
+}
+.status-off {
+  color: #f44336;
+  font-weight: bold;
+}
+.season-hint {
+  font-size: 12px;
+  color: #999;
+  margin-left: 5px;
+}
+.stock-warning {
+  color: #f44336;
+  font-size: 12px;
+  margin-left: 5px;
 }
 </style>

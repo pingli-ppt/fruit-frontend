@@ -97,6 +97,25 @@
           <span class="checkbox-text">仅显示有销售数据的品类</span>
         </label>
       </div>
+
+      <!-- 状态筛选 -->
+      <div class="filter-section">
+        <div class="filter-title-small">商品状态</div>
+        <div class="filter-tags">
+          <button
+            :class="['tag-button', { active: localFilters.status === 1 }]"
+            @click="toggleStatus(1)"
+          >
+            在售
+          </button>
+          <button
+            :class="['tag-button', { active: localFilters.status === 0 }]"
+            @click="toggleStatus(0)"
+          >
+            下架
+          </button>
+        </div>
+      </div>
     </div>
     
     <div class="filter-actions">
@@ -166,6 +185,15 @@ const toggleQualityCert = (cert) => {
   }
 }
 
+// 切换状态筛选
+const toggleStatus = (status) => {
+  if (localFilters.value.status === status) {
+    updateFilter('status', undefined)
+  } else {
+    updateFilter('status', status)
+  }
+}
+
 // 应用筛选
 const applyFilters = () => {
   emit('update:filters', localFilters.value)
@@ -179,7 +207,8 @@ const handleReset = () => {
     demoLevel: '',
     qualityCert: '',
     season: '',
-    hasFinancialData: false
+    hasFinancialData: false,
+    status: undefined  // 状态重置
   }
   emit('reset')
 }
@@ -446,5 +475,12 @@ watch(() => props.filters, (newFilters) => {
     padding: 5px 8px;
     font-size: 10px;
   }
+}
+
+.filter-title-small {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 6px;
+  font-weight: 500;
 }
 </style>

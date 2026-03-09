@@ -3,6 +3,12 @@
   <div class="category-card" @click="handleClick">
     <div class="card-header">
       <h3 class="category-name">{{ category.name }}</h3>
+      <h3 class="category-name">
+        {{ category.name }}
+        <span class="status-badge" :class="{'status-on': category.status === 1, 'status-off': category.status === 0}">
+          {{ category.status === 1 ? '在售' : '下架' }}
+        </span>
+      </h3>
       <div class="category-tags">
         <!-- 示范级别标签 -->
         <span v-if="category.cooperative?.level" class="tag demo-tag">
@@ -60,7 +66,7 @@
         </div>
       </div>
       
-      <!-- 销售数据（如果有） -->
+      <!-- 销售数据 -->
       <div v-if="category.stats?.annualSales > 0" class="sales-stats">
         <div class="stat-row">
           <div class="stat-item">
@@ -83,6 +89,14 @@
       <!-- 无销售数据提示 -->
       <div v-else class="no-data">
         <span class="no-data-text">暂无销售数据</span>
+      </div>
+
+      <!-- 库存信息 -->
+      <div v-if="category.stock !== undefined" class="stock-info">
+        <span class="stock-label">库存：</span>
+        <span class="stock-value" :class="{'stock-low': category.stock === 0}">
+          {{ category.stock > 0 ? category.stock + '件' : '缺货' }}
+        </span>
       </div>
     </div>
     
@@ -498,5 +512,55 @@ const handleDetailClick = (e) => {
   .content-preview {
     height: 80px;
   }
+}
+
+/* 状态标签样式 */
+.status-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  margin-left: 8px;
+  font-weight: normal;
+}
+.status-badge.status-on {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+.status-badge.status-off {
+  background: #ffebee;
+  color: #c62828;
+}
+
+/* 或者用标签形式 */
+.status-on-tag {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+.status-off-tag {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
+
+/* 库存信息 */
+.stock-info {
+  margin-top: 8px;
+  padding: 8px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  font-size: 13px;
+}
+.stock-label {
+  color: #666;
+  margin-right: 5px;
+}
+.stock-value {
+  font-weight: 500;
+  color: #333;
+}
+.stock-value.stock-low {
+  color: #f44336;
 }
 </style>
