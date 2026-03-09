@@ -165,6 +165,7 @@ const qualityCerts = computed(() => {
 // 更新筛选
 const updateFilter = (key, value) => {
   localFilters.value = { ...localFilters.value, [key]: value }
+  console.log('更新筛选条件:', key, value)  // 调试用
 }
 
 // 切换示范级别
@@ -188,14 +189,18 @@ const toggleQualityCert = (cert) => {
 // 切换状态筛选
 const toggleStatus = (status) => {
   if (localFilters.value.status === status) {
-    updateFilter('status', undefined)
+    // 如果点击的是同一个状态，取消选中
+    localFilters.value.status = undefined;
   } else {
-    updateFilter('status', status)
+    // 否则设置为选中的状态
+    localFilters.value.status = status;
   }
+  console.log('状态筛选变为:', localFilters.value.status);  // 调试用
 }
 
 // 应用筛选
 const applyFilters = () => {
+  console.log('应用筛选，当前条件:', localFilters.value)  // 调试用
   emit('update:filters', localFilters.value)
 }
 

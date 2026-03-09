@@ -2,11 +2,10 @@
 <template>
   <div class="category-card" @click="handleClick">
     <div class="card-header">
-      <h3 class="category-name">{{ category.name }}</h3>
       <h3 class="category-name">
         {{ category.name }}
-        <span class="status-badge" :class="{'status-on': category.status === 1, 'status-off': category.status === 0}">
-          {{ category.status === 1 ? '在售' : '下架' }}
+        <span class="status-badge" :class="{'status-on': displayStatus === 1, 'status-off': displayStatus === 0}">
+          {{ displayStatus === 1 ? '在售' : '下架' }}
         </span>
       </h3>
       <div class="category-tags">
@@ -109,7 +108,8 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue'
+import { defineProps, defineEmits, computed } from 'vue'
+import { checkIsInSeason } from '../../utils/season'
 
 const props = defineProps({
   category: {
@@ -119,6 +119,14 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['click'])
+
+// 根据上市期判断当前是否在售
+const isInSeason = computed(() => checkIsInSeason(props.category?.season))
+
+// 显示状态（覆盖后端的 status）
+const displayStatus = computed(() => {
+  return isInSeason.value ? 1 : 0
+})
 
 // 图片URL处理函数
 const formatImageUrl = (imageUrl) => {

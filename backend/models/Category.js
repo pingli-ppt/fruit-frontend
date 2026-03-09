@@ -64,6 +64,29 @@ class Category {
       sql += ' AND s.annual_sales > 0';
     }
 
+    if (filters.season) {
+      // 提取查询的月份数字
+      const monthMatch = filters.season.match(/(\d+)/);
+      if (monthMatch) {
+        const queryMonth = parseInt(monthMatch[1]);
+    
+        // 复杂的季节判断逻辑（和前端保持一致）
+        sql += ` AND (
+          c.season LIKE '%全年%' OR 
+          c.season LIKE '%一年四季%' OR 
+          c.season LIKE '%一直有%' OR
+          c.season LIKE '%${queryMonth}月%' OR
+          c.season LIKE '%-${queryMonth}%' OR
+          c.season LIKE '%${queryMonth}月份%' OR
+          (c.season LIKE '%到%' AND c.season LIKE '%${queryMonth}%')
+        )`;
+      } else {
+        // 如果没有数字，就用原来的LIKE匹配
+        sql += ' AND c.season LIKE ?';
+        params.push(`%${filters.season}%`);
+      }
+    }
+
     // 状态筛选
     if (filters.status !== undefined) {
       sql += ` AND (
@@ -89,9 +112,6 @@ class Category {
         break;
       case 'price':
         sql += ' ORDER BY s.price_per_ton DESC';
-        break;
-      case 'name':
-        sql += ' ORDER BY c.name';
         break;
       case 'new':  // 上新排序
         sql += ' ORDER BY c.created_at DESC';
@@ -142,6 +162,12 @@ class Category {
     
     if (filters.hasFinancialData) {
       sql += ' AND s.annual_sales > 0';
+    }
+
+    if (filters.season) {
+      sql += ' AND c.season LIKE ?';
+      params.push(`%${filters.season}%`);
+      console.log('季节筛选:', filters.season);  // 添加日志
     }
 
     // 状态筛选
@@ -312,6 +338,11 @@ class Category {
       sql += ' AND s.annual_sales > 0';
     }
 
+    if (filters.season) {
+      sql += ' AND c.season LIKE ?';
+      params.push(`%${filters.season}%`);
+    }
+
     // 状态筛选
     if (filters.status !== undefined) {
       sql += ` AND (
@@ -343,9 +374,6 @@ class Category {
         break;
       case 'price':
         sql += ' ORDER BY s.price_per_ton DESC, c.id DESC';
-        break;
-      case 'name':
-        sql += ' ORDER BY c.name, c.id DESC';
         break;
       case 'new':
         sql += ' ORDER BY c.created_at DESC, c.id DESC';

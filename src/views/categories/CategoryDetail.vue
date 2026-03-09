@@ -53,8 +53,8 @@
               <div class="info-item">
                 <span class="info-label">当前状态：</span>
                 <span class="info-value">
-                  <span :class="{'status-on': category.status === 1, 'status-off': category.status === 0}"> 
-                    {{ category.status === 1 ? '在售' : '下架' }}
+                  <span :class="{'status-on': displayStatus === 1, 'status-off': displayStatus === 0}"> 
+                    {{ displayStatus === 1 ? '在售' : '下架' }}
                   </span>
                   <span class="season-hint">（根据上市期自动判断）</span>
                 </span>
@@ -90,28 +90,28 @@
           <div v-if="hasFinancialData" class="stats-card">
             <h3 class="card-title">销售数据</h3>
             <div class="stats-grid">
-              <div class="stat-item">
+              <div v-if="category.stats?.annualSales > 0" class="stat-item">
                 <div class="stat-icon">📦</div>
                 <div class="stat-content">
                   <div class="stat-number">{{ formatNumber(category.stats.annualSales) }}</div>
                   <div class="stat-label">年销量（吨）</div>
                 </div>
               </div>
-              <div class="stat-item">
+              <div v-if="category.stats.annualRevenue > 0" class="stat-item">
                 <div class="stat-icon">💰</div>
                 <div class="stat-content">
                   <div class="stat-number">{{ formatNumber(category.stats.annualRevenue) }}</div>
                   <div class="stat-label">年销售额（万元）</div>
                 </div>
               </div>
-              <div class="stat-item">
+              <div v-if="category.stats.pricePerTon > 0" class="stat-item">
                 <div class="stat-icon">📊</div>
                 <div class="stat-content">
                   <div class="stat-number">{{ formatPrice(category.stats.pricePerTon) }}</div>
                   <div class="stat-label">单价（元/吨）</div>
                 </div>
               </div>
-              <div class="stat-item">
+              <div v-if="category.stats.plantingArea > 0" class="stat-item">
                 <div class="stat-icon">🌱</div>
                 <div class="stat-content">
                   <div class="stat-number">{{ formatNumber(category.stats.plantingArea) }}</div>
@@ -221,8 +221,7 @@ const loadCategoryDetail = async () => {
     
     if (result.code === 0 && result.data) {
       category.value = result.data
-      console.log('成功获取品类:', category.value.name)
-      console.log('图片URL:', category.value.imageUrl)
+      console.log('成功获取品类:', category.value)
     } else {
       console.log('未找到品类，ID:', id)
       category.value = null
@@ -288,21 +287,85 @@ const hasDescription = computed(() => {
 })
 
 const hasFinancialData = computed(() => {
-  return category.value?.stats?.annualSales > 0
+  const stats = category.value?.stats
+  if (!stats) return false
+  
+  // 检查是否有任何销售数据
+  return (
+    (stats.annualSales && parseFloat(stats.annualSales) > 0) ||
+    (stats.annualRevenue && parseFloat(stats.annualRevenue) > 0) ||
+    (stats.pricePerTon && parseFloat(stats.pricePerTon) > 0) ||
+    (stats.plantingArea && parseFloat(stats.plantingArea) > 0)
+  )
 })
 
-// 格式化方法
-const formatNumber = (num) => {
-  if (typeof num !== 'number' || isNaN(num) || num === 0) return '0'
-  if (num >= 10000) {
-    return (num / 10000).toFixed(1) + '万'
+// 根据上市期判断当前是否在售
+const isInSeason = computed(() => {
+  if (!category.value?.season) return false
+  
+  const season = category.value.season
+  const currentMonth = new Date().getMonth() + 1
+  
+  // 处理全年供应的
+  if (season.includes('全年') || season.includes('一年四季') || season.includes('一直有')) {
+    return true
   }
-  return num.toLocaleString()
+  
+  // 处理 "除了X月X月" 的情况
+  if (season.includes('除了')) {
+    // 提取排除的月份
+    const excludeMatch = season.match(/除了(.*?)月/g)
+    if (excludeMatch) {
+      const excludeMonths = excludeMatch.map(m => parseInt(m.replace(/[^0-9]/g, '')))
+      return !excludeMonths.includes(currentMonth)
+    }
+  }
+  
+  // 处理 "1-7月份，9-12月份" 的情况
+  if (season.includes('-') || season.includes('到')) {
+    const ranges = season.split(/[，,]/)
+    for (const range of ranges) {
+      const match = range.match(/(\d+)[\-至到](\d+)/)
+      if (match) {
+        const start = parseInt(match[1])
+        const end = parseInt(match[2])
+        if (currentMonth >= start && currentMonth <= end) {
+          return true
+        }
+      }
+    }
+  }
+  
+  // 处理单个月份
+  if (season.includes(currentMonth + '月') || season.includes(currentMonth + '月份')) {
+    return true
+  }
+  
+  return false
+})
+
+// 显示状态
+const displayStatus = computed(() => {
+  return isInSeason.value ? 1 : 0
+})
+
+// 格式化数字
+const formatNumber = (num) => {
+  if (num === undefined || num === null || num === 0) return '0'
+  const value = parseFloat(num)
+  if (isNaN(value)) return '0'
+  if (value >= 10000) {
+    return (value / 10000).toFixed(1) + '万'
+  }
+  return value.toLocaleString()
 }
 
+// 格式化价格
 const formatPrice = (price) => {
-  if (typeof price !== 'number' || isNaN(price) || price === 0) return '0'
-  return Math.round(price).toLocaleString()
+  if (price === undefined || price === null || price === 0) return '0'
+  const value = parseFloat(price)
+  if (isNaN(value)) return '0'
+  return Math.round(value).toLocaleString()
 }
 
 const formatSeason = (season) => {

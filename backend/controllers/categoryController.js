@@ -2,6 +2,7 @@ const Category = require('../models/Category');
 
 // 获取品类列表
 exports.getCategories = async (req, res) => {
+  console.log('收到的查询参数:', req.query);
   try {
     const {
       categoryName,
@@ -10,6 +11,7 @@ exports.getCategories = async (req, res) => {
       qualityCert,
       hasFinancialData,
       status,
+      season,
       sortBy = 'default',
       page = 1,
       limit = 12
@@ -24,7 +26,8 @@ exports.getCategories = async (req, res) => {
       demoLevel,
       qualityCert,
       hasFinancialData: hasFinancialData === 'true',
-      status: status !== undefined ? parseInt(status) : undefined
+      status: status !== undefined ? parseInt(status) : undefined,
+      season
     };
 
     const offset = (page - 1) * limit;
@@ -176,6 +179,7 @@ exports.scrollCategories = async (req, res) => {
       demoLevel,
       qualityCert,
       hasFinancialData,
+      season,
       sortBy = 'default',
       limit = 12,
       lastId
@@ -186,7 +190,8 @@ exports.scrollCategories = async (req, res) => {
       cooperativeName,
       demoLevel,
       qualityCert,
-      hasFinancialData: hasFinancialData === 'true'
+      hasFinancialData: hasFinancialData === 'true',
+      season
     };
 
     const result = await Category.scroll(filters, sortBy, parseInt(limit), lastId);

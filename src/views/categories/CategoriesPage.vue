@@ -26,7 +26,7 @@
         <!-- 结果信息 -->
         <div class="results-header">
           <div class="results-count">
-            共找到 <span class="count-number">{{ totalItems }}</span> 个品类
+            共找到 <span class="count-number">{{ filteredTotal }}</span> 个品类
           </div>
           <div class="results-sort">
             <select v-model="sortBy" class="sort-select">
@@ -34,7 +34,6 @@
               <option value="sales">销量最高</option>
               <option value="revenue">销售额最高</option>
               <option value="price">价格最高</option>
-              <option value="name">名称排序</option>
             </select>
           </div>
         </div>
@@ -56,7 +55,7 @@
         <!-- 品类列表 -->
         <div v-else class="categories-grid">
           <CategoryCard
-            v-for="category in categories"
+            v-for="category in filteredCategories"
             :key="category.id"
             :category="category"
             @click="viewCategoryDetail(category.id)"
@@ -84,6 +83,7 @@ import CategoryFilter from '../../components/categories/CategoryFilter.vue'
 import CategoryCard from '../../components/categories/CategoryCard.vue'
 import CategoryPagination from '../../components/categories/CategoryPagination.vue'
 import dataService from '../../services/dataService'
+import { checkIsInSeason } from '../../utils/season'
 
 const router = useRouter()
 
@@ -135,9 +135,21 @@ const updateQueryParams = () => {
 
 // 事件处理
 const handleFilterUpdate = async (newFilters) => {
+  console.log('收到新筛选条件:', newFilters)  // 调试用
+  
+  // 更新筛选条件
   activeFilters.value = { ...activeFilters.value, ...newFilters }
+  
+  // 如果状态筛选有值，确保是数字
+  if (activeFilters.value.status !== undefined && activeFilters.value.status !== null) {
+    activeFilters.value.status = parseInt(activeFilters.value.status)
+  }
+
+  // 确保 season 被正确传递
+  console.log('当前季节筛选:', activeFilters.value.season)
+  
   currentPage.value = 1
-  updateQueryParams() // 更新URL
+  updateQueryParams()
   loading.value = true
   await loadCategories()
   loading.value = false
@@ -245,9 +257,9 @@ const loadCategories = async () => {
     if (activeFilters.value.hasFinancialData) {
       params.append('hasFinancialData', 'true');
     }
-    // 状态筛选
-    if (activeFilters.value.status !== undefined && activeFilters.value.status !== null) {
-      params.append('status', activeFilters.value.status);
+    if (activeFilters.value.season) {
+      params.append('season', activeFilters.value.season);
+      console.log('添加季节参数:', activeFilters.value.season);  // 调试用
     }
 
     // 调用API获取数据
@@ -287,7 +299,101 @@ const loadCategories = async () => {
 
 // 筛选后的品类
 const filteredCategories = computed(() => {
-  return Array.isArray(categories.value) ? categories.value : []
+  console.log('开始过滤，原始数据:', categories.value.length)
+  let result = categories.value
+  
+  // 前端过滤状态
+  if (activeFilters.value.status !== undefined && activeFilters.value.status !== null) {
+    console.log('应用状态筛选:', activeFilters.value.status)
+    result = result.filter(cat => {
+      const isInSeason = checkIsInSeason(cat.season)
+      const displayStatus = isInSeason ? 1 : 0
+      return displayStatus === activeFilters.value.status
+    })
+    console.log('状态筛选后:', result.length)
+  }
+
+  // 季节筛选
+  if (activeFilters.value.season && activeFilters.value.season.trim() !== '') {
+    result = result.filter(cat => {
+      const season = cat.season || ''
+      const queryMonth = activeFilters.value.season.match(/(\d+)/)?.[1]
+    
+      if (!queryMonth) return false
+    
+      const month = parseInt(queryMonth)
+    
+      // 处理全年供应
+      if (season.includes('全年') || season.includes('一年四季') || season.includes('一直有')) {
+        return true
+      }
+    
+      // 处理 "除了X月X月" 的情况
+      if (season.includes('除了')) {
+        const excludeMatch = season.match(/除了(.*?)月/g)
+        if (excludeMatch) {
+          const excludeMonths = excludeMatch.map(m => parseInt(m.replace(/[^0-9]/g, '')))
+          return !excludeMonths.includes(month)
+        }
+      }
+    
+      // 处理 "1-7月份，10-12月份" 这种带逗号的
+      if (season.includes('，') || season.includes(',')) {
+        const ranges = season.split(/[，,]/)
+        for (const range of ranges) {
+          const match = range.match(/(\d+)[\-至到](\d+)/)
+          if (match) {
+            const start = parseInt(match[1])
+            const end = parseInt(match[2])
+            if (month >= start && month <= end) {
+              return true
+            }
+          }
+        }
+      }
+    
+      // 处理 "2月份到5月底" 这种格式
+      if (season.includes('到') || season.includes('-')) {
+        const match = season.match(/(\d+)[月份]*(?:到|至|-)(\d+)[月份]*(?:底|份|$)?/)
+        if (match) {
+          const start = parseInt(match[1])
+          const end = parseInt(match[2])
+          if (month >= start && month <= end) {
+            return true
+          }
+        }
+      }
+    
+      // 处理单个月份
+      if (season.includes(month + '月') || season.includes(month + '月份')) {
+        return true
+      }
+    
+      return false
+    })
+    console.log('季节筛选后:', result.length)
+  }
+  
+  console.log('最终结果:', result.length)
+  return result
+})
+
+// 用于显示的过滤后总数
+const filteredTotal = computed(() => {
+  // 如果有筛选条件（状态、季节、名称等），返回前端过滤后的数量
+  if (
+    (activeFilters.value.status !== undefined && activeFilters.value.status !== null) ||
+    (activeFilters.value.season && activeFilters.value.season.trim() !== '') ||
+    (activeFilters.value.categoryName && activeFilters.value.categoryName.trim() !== '') ||
+    (activeFilters.value.cooperativeName && activeFilters.value.cooperativeName.trim() !== '') ||
+    (activeFilters.value.demoLevel && activeFilters.value.demoLevel.trim() !== '') ||
+    (activeFilters.value.qualityCert && activeFilters.value.qualityCert.trim() !== '') ||
+    activeFilters.value.hasFinancialData
+  ) {
+    return filteredCategories.value.length
+  }
+  // 没有筛选时返回后端返回的总数
+  return totalItems.value
 })
 
 // 分页后的品类 - 直接返回从API获取的数据
